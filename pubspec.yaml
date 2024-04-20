@@ -36,6 +36,9 @@ dependencies:
   random_string: ^2.3.1
   fluttertoast: ^8.2.5
   flutter_styled_toast: ^2.2.1
+  firebase_auth: ^4.19.2
+  google_sign_in: ^6.1.6
+  the_apple_sign_in: ^1.1.1
 
 
   # The following adds the Cupertino Icons font to your application.

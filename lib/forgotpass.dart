@@ -1,6 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class ForgotPasswordPage extends StatelessWidget {
+class ForgotPasswordPage extends StatefulWidget {
+  const ForgotPasswordPage({super.key});
+
+  @override
+  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
+}
+
+class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+  String email = "";
+  TextEditingController emailcontroller = new TextEditingController();
+
+  final _formkey = GlobalKey<FormState>();
+
+  resetPassword() async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+        "Check your email inbox",
+        style: TextStyle(fontSize: 20.0),
+      )));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "user-not-found") {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Color.fromARGB(255, 36, 36, 36),
+            content: Text(
+              "We don't know you!",
+              style: TextStyle(
+                decoration: TextDecoration.none,
+                color: Color.fromARGB(255, 255, 255, 255),
+                fontSize: 18,
+              ),
+            )));
+      } else if (e.code == 'invalid-email') {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Color.fromARGB(255, 36, 36, 36),
+            content: Text(
+              " That email might be missing a few pieces",
+              style: TextStyle(
+                decoration: TextDecoration.none,
+                color: Color.fromARGB(255, 255, 255, 255),
+                fontSize: 18,
+              ),
+            )));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,128 +71,107 @@ class ForgotPasswordPage extends StatelessWidget {
                 style: TextStyle(color: Colors.white, fontSize: 33),
               ),
             ),
+            SizedBox(
+              height: 40,
+            ),
             SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.28),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 35, right: 35),
-                      child: Column(
-                        children: [
-                          TextField(
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
+              child: Form(
+                key: _formkey,
+                child: Container(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.28),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 35, right: 35),
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please Enter Email';
+                                }
+                                return null;
+                              },
+                              controller: emailcontroller,
+                              style: TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  hintText: "Email",
+                                  hintStyle: TextStyle(color: Colors.white),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                if (_formkey.currentState!.validate()) {
+                                  setState(() {
+                                    email = emailcontroller.text;
+                                  });
+                                  resetPassword();
+                                }
+                              },
+                              child: Container(
+                                width: 140,
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
                                     color: Colors.white,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                hintText: "Email",
-                                hintStyle: TextStyle(color: Colors.white),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          TextField(
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                hintText: "Phone Number",
-                                hintStyle: TextStyle(color: Colors.white),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          TextField(
-                            style: TextStyle(color: Colors.white),
-                            obscureText: true,
-                            decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                hintText: "New Password",
-                                hintStyle: TextStyle(color: Colors.white),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
-                          ),
-                          SizedBox(
-                            height: 40,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/login');
-                                },
-                                child: Text(
-                                  'Back To Login',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
+                                    borderRadius: BorderRadius.circular(30)),
+                                child: Center(
+                                  child: Text(
+                                    "Send Email",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ),
-                              CircleAvatar(
-                                radius: 30,
-                                backgroundColor: Color(0xff4c505b),
-                                child: IconButton(
-                                  color: Colors.white,
-                                  icon: Icon(
-                                    Icons.chevron_right_rounded,
-                                  ),
+                            ),
+                            SizedBox(
+                              height: 50.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextButton(
                                   onPressed: () {
-                                    // Handle login logic here
                                     Navigator.pushNamed(context, '/login');
                                   },
+                                  child: Text(
+                                    'Back To Login',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                                  ),
                                 ),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 40,
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+                              ],
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
