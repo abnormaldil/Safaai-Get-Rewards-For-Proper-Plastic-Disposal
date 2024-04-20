@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:random_string/random_string.dart';
 import 'package:safaai/home.dart';
 import 'package:safaai/login.dart';
+import 'package:safaai/service/database.dart';
 
 class RegisterPage extends StatelessWidget {
+  TextEditingController namecontroller = new TextEditingController();
+  TextEditingController emailcontroller = new TextEditingController();
+  TextEditingController phonecontroller = new TextEditingController();
+  TextEditingController passcontroller = new TextEditingController();
+  TextEditingController upicontroller = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,6 +45,7 @@ class RegisterPage extends StatelessWidget {
                       child: Column(
                         children: [
                           TextField(
+                            controller: namecontroller,
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
@@ -61,6 +70,7 @@ class RegisterPage extends StatelessWidget {
                             height: 13,
                           ),
                           TextField(
+                            controller: emailcontroller,
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
@@ -85,6 +95,7 @@ class RegisterPage extends StatelessWidget {
                             height: 13,
                           ),
                           TextField(
+                            controller: phonecontroller,
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
@@ -109,6 +120,7 @@ class RegisterPage extends StatelessWidget {
                             height: 13,
                           ),
                           TextField(
+                            controller: passcontroller,
                             style: TextStyle(color: Colors.white),
                             obscureText: true,
                             decoration: InputDecoration(
@@ -134,6 +146,7 @@ class RegisterPage extends StatelessWidget {
                             height: 13,
                           ),
                           TextField(
+                            controller: upicontroller,
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
@@ -175,7 +188,28 @@ class RegisterPage extends StatelessWidget {
                                   icon: Icon(
                                     Icons.chevron_right_rounded,
                                   ),
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    String Id = randomAlphaNumeric(10);
+                                    Map<String, dynamic> userInfoMap = {
+                                      "Id": Id,
+                                      "Name": namecontroller.text,
+                                      "Email": emailcontroller.text,
+                                      "Phone": phonecontroller.hashCode,
+                                      "Pass": passcontroller.text,
+                                      "Upi Id": upicontroller.text,
+                                    };
+                                    await DatabaseMethods()
+                                        .addUserDetails(userInfoMap, Id)
+                                        .then((value) {
+                                      Fluttertoast.showToast(
+                                          msg: "Registered Successfully",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.red,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    });
                                     // Handle login logic here
                                     Navigator.pushNamed(context, '/login');
                                   },

@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "D:/Dillu/Android Projects/java/safaai/build/windows/x64/extracted/firebase_cpp_sdk_windows"
+    "cmake.sourceDirectory": "D:/Dillu/Android Projects/java/safaai/build/windows/x64/extracted/firebase_cpp_sdk_windows",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

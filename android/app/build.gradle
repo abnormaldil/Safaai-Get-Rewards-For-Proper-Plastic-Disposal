@@ -1,7 +1,9 @@
 plugins {
     id "com.android.application"
+    id 'org.jetbrains.kotlin.android'
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
+    id "com.google.gms.google-services"
 }
 
 def localProperties = new Properties()
@@ -21,6 +23,11 @@ def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
+
+// apply plugin: 'com.android.application'
+// apply plugin: 'com.google.gms.google-services'
+// apply plugin: 'kotlin-android'
+// apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
     namespace "com.rit.safaai"
@@ -64,4 +71,8 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation platform('com.google.firebase:firebase-bom:30.4.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+}

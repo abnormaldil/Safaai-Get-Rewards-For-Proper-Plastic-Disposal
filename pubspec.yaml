@@ -31,12 +31,16 @@ dependencies:
   flutter:
     sdk: flutter
   connectivity_plus: ^6.0.1
+  firebase_core: ^2.30.0
+  cloud_firestore: ^4.17.0
+  random_string: ^2.3.1
+  fluttertoast: ^8.2.5
+  flutter_styled_toast: ^2.2.1
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
-  firebase_core: ^2.28.0
   shared_preferences: ^2.2.2
   http: ^1.2.1
 
@@ -49,10 +53,10 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path_ios: "assets/launcher/icon.png"
-  image_path_android: "assets/launcher/icon.png"
-  adaptive_icon_background: "assets/launcher/background.png"
-  adaptive_icon_foreground: "assets/launcher/foreground.png"
+  image_path_ios: "assets/icon.png"
+  image_path_android: "assets/icon.png"
+  adaptive_icon_background: "assets/background.png"
+  adaptive_icon_foreground: "assets/foreground.png"
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

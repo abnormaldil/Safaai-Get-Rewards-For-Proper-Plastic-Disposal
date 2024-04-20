@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:safaai/forgotpass.dart';
 import 'package:safaai/home.dart';
@@ -7,7 +8,9 @@ import 'package:safaai/redeem.dart';
 import 'package:safaai/register.dart';
 import 'package:safaai/transaction.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     home: LoginPage(),

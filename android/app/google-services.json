@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "618311522744",
+    "project_id": "rit24safaai",
+    "storage_bucket": "rit24safaai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:618311522744:android:b0f2dafd0a6171c5fc174d",
+        "android_client_info": {
+          "package_name": "com.rit.safaai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtKl0jmLRZe3FVzPumMsEdvFB61sqBSDM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
