@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: ^4.19.2
   google_sign_in: ^6.1.6
   the_apple_sign_in: ^1.1.1
+  curved_navigation_bar: ^1.0.3
 
 
   # The following adds the Cupertino Icons font to your application.

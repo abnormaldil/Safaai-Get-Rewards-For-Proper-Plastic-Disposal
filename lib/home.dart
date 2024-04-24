@@ -27,28 +27,6 @@ class HomePage extends StatelessWidget {
               //       fontWeight: FontWeight.w700),
               // ),
             ),
-            Container(
-              padding: EdgeInsets.only(top: 40),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    iconSize: 55,
-                    icon: const Icon(Icons.account_circle_outlined),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/profile');
-                    },
-                  ),
-                  IconButton(
-                    iconSize: 50,
-                    icon: const Icon(Icons.account_balance_wallet_rounded),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/redeem');
-                    },
-                  ),
-                ],
-              ),
-            ),
             SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.only(
@@ -99,18 +77,6 @@ class HomePage extends StatelessWidget {
                           SizedBox(
                             height: 40,
                           ),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/transaction');
-                              },
-                              child: Text(
-                                'Transaction History',
-                                style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  color: Color(0xff4c505b),
-                                  fontSize: 18,
-                                ),
-                              )),
                         ],
                       ),
                     )

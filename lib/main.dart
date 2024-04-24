@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:safaai/bottomnav.dart';
 import 'package:safaai/forgotpass.dart';
 import 'package:safaai/home.dart';
 import 'package:safaai/login.dart';
@@ -13,7 +14,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: LoginPage(),
+    home: BottomNav(),
     routes: {
       '/register': (context) => RegisterPage(),
       '/login': (context) => LoginPage(),
