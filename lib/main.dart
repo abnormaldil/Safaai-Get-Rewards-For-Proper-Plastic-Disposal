@@ -14,7 +14,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: BottomNav(),
+    home: LoginPage(),
     routes: {
       '/register': (context) => RegisterPage(),
       '/login': (context) => LoginPage(),

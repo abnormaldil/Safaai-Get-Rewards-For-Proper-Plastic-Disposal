@@ -38,38 +38,61 @@ class _RegisterPageState extends State<RegisterPage> {
             context, MaterialPageRoute(builder: (context) => LoginPage()));
       } on FirebaseAuthException catch (e) {
         if (e.code == 'invalid-email') {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: Color.fromARGB(255, 36, 36, 36),
-              content: Text(
-                " That email might be missing a few pieces",
-                style: TextStyle(
-                  decoration: TextDecoration.none,
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  fontSize: 18,
-                ),
-              )));
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('Invalid Email'),
+                content: Text(
+                    'That Email Might Be Missing a Few Pieces. Try Again!'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context); // Close the dialog
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
         } else if (e.code == 'weak-password') {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: Color.fromARGB(255, 36, 36, 36),
-              content: Text(
-                "Your password needs more strength",
-                style: TextStyle(
-                  decoration: TextDecoration.none,
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  fontSize: 18,
-                ),
-              )));
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('Weak Password'),
+                content: Text('Your Password Need More Strength'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context); // Close the dialog
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
         } else if (e.code == "email-already-in-use") {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: Color.fromARGB(255, 36, 36, 36),
-              content: Text(
-                "We already know you! Please log in.",
-                style: TextStyle(
-                  decoration: TextDecoration.none,
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  fontSize: 18,
-                ),
-              )));
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('Hey I Know You!'),
+                content: Text(
+                    'Account already exists for this Email. Login instead'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context); // Close the dialog
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
         }
       }
     }
@@ -121,21 +144,21 @@ class _RegisterPageState extends State<RegisterPage> {
                               style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                     borderSide: BorderSide(
                                       color: Colors.white,
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                     borderSide: BorderSide(
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   hintText: "Name",
                                   hintStyle: TextStyle(color: Colors.white),
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                   )),
                             ),
                             SizedBox(
@@ -152,21 +175,21 @@ class _RegisterPageState extends State<RegisterPage> {
                               style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                     borderSide: BorderSide(
                                       color: Colors.white,
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                     borderSide: BorderSide(
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   hintText: "Email",
                                   hintStyle: TextStyle(color: Colors.white),
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                   )),
                             ),
                             SizedBox(
@@ -183,21 +206,21 @@ class _RegisterPageState extends State<RegisterPage> {
                               style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                     borderSide: BorderSide(
                                       color: Colors.white,
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                     borderSide: BorderSide(
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   hintText: "Phone Number",
                                   hintStyle: TextStyle(color: Colors.white),
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                   )),
                             ),
                             SizedBox(
@@ -215,21 +238,21 @@ class _RegisterPageState extends State<RegisterPage> {
                               obscureText: true,
                               decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                     borderSide: BorderSide(
                                       color: Colors.white,
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                     borderSide: BorderSide(
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   hintText: "Password",
                                   hintStyle: TextStyle(color: Colors.white),
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                   )),
                             ),
                             SizedBox(
@@ -246,21 +269,21 @@ class _RegisterPageState extends State<RegisterPage> {
                               style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                     borderSide: BorderSide(
                                       color: Colors.white,
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                     borderSide: BorderSide(
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   hintText: "Upi Id",
                                   hintStyle: TextStyle(color: Colors.white),
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                   )),
                             ),
                             SizedBox(

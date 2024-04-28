@@ -98,21 +98,21 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                               style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                     borderSide: BorderSide(
                                       color: Colors.white,
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                     borderSide: BorderSide(
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   hintText: "Email",
                                   hintStyle: TextStyle(color: Colors.white),
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                   )),
                             ),
                             SizedBox(
@@ -131,13 +131,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 width: 140,
                                 padding: EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                    color: Colors.white,
+                                    color: Color.fromARGB(255, 255, 255, 255),
                                     borderRadius: BorderRadius.circular(30)),
                                 child: Center(
                                   child: Text(
                                     "Send Email",
                                     style: TextStyle(
-                                        color: Colors.black,
+                                        color: const Color.fromARGB(
+                                            255, 23, 23, 23),
                                         fontSize: 18.0,
                                         fontWeight: FontWeight.bold),
                                   ),

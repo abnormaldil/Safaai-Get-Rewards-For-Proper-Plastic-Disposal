@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:safaai/bottomnav.dart';
-import 'package:safaai/home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -32,49 +31,71 @@ class _LoginPageState extends State<LoginPage> {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Color.fromARGB(255, 39, 38, 38),
+            backgroundColor: Color.fromARGB(255, 48, 45, 45),
             content: Text(
               "We don't know you!",
               style: TextStyle(
                 decoration: TextDecoration.none,
-                color: Color.fromARGB(255, 255, 255, 255),
+                color: Color.fromARGB(255, 30, 29, 29),
                 fontSize: 18,
               ),
             )));
       }
       if (e.code == 'invalid-email') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Color.fromARGB(255, 36, 36, 36),
-            content: Text(
-              " That email might be missing a few pieces",
-              style: TextStyle(
-                decoration: TextDecoration.none,
-                color: Color.fromARGB(255, 255, 255, 255),
-                fontSize: 18,
-              ),
-            )));
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Invalid Email'),
+              content: Text('The entered Email is invalid. Please try again.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the dialog
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
       } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Color.fromARGB(255, 30, 29, 29),
-            content: Text(
-              "Your password seems different",
-              style: TextStyle(
-                decoration: TextDecoration.none,
-                color: Color.fromARGB(255, 255, 255, 255),
-                fontSize: 18,
-              ),
-            )));
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Invalid Password'),
+              content:
+                  Text('The entered Password is invalid. Please try again.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the dialog
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
       } else if (e.code == 'user-mismatch') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Color.fromARGB(255, 30, 29, 29),
-            content: Text(
-              "Who are you?",
-              style: TextStyle(
-                decoration: TextDecoration.none,
-                color: Color.fromARGB(255, 255, 255, 255),
-                fontSize: 18,
-              ),
-            )));
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Who are you?'),
+              content: Text("We don't know you. SignUp instead."),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the dialog
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
       }
     }
   }
@@ -87,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
             image: AssetImage('assets/login.png'), fit: BoxFit.cover),
       ),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color.fromARGB(0, 25, 25, 25),
         body: Stack(
           children: [
             Container(),
@@ -119,13 +140,15 @@ class _LoginPageState extends State<LoginPage> {
                                 return null;
                               },
                               controller: emailcontroller,
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(
+                                  color: const Color.fromARGB(255, 23, 23, 23)),
                               decoration: InputDecoration(
-                                  fillColor: Colors.grey.shade100,
+                                  fillColor:
+                                      const Color.fromARGB(255, 255, 255, 255),
                                   filled: true,
                                   hintText: "Email",
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                   )),
                             ),
                             SizedBox(
@@ -142,11 +165,12 @@ class _LoginPageState extends State<LoginPage> {
                               style: TextStyle(),
                               obscureText: true,
                               decoration: InputDecoration(
-                                  fillColor: Colors.grey.shade100,
+                                  fillColor:
+                                      const Color.fromARGB(255, 255, 255, 255),
                                   filled: true,
                                   hintText: "Password",
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(30),
                                   )),
                             ),
                             SizedBox(
