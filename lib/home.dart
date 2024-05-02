@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safaai/transaction.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,6 +18,7 @@ class _HomePageState extends State<HomePage> {
     if (validCodes.contains(code)) {
       setState(() {
         tokenBalance = (int.parse(tokenBalance) + 10).toString();
+        // Add transaction
       });
     } else {
       // Show an error message for invalid code
@@ -58,13 +60,6 @@ class _HomePageState extends State<HomePage> {
                       padding: EdgeInsets.all(110),
                       child: Column(
                         children: [
-                          Text(
-                            'Token Balance',
-                            style: TextStyle(
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
                           SizedBox(height: 10),
                           Text(
                             '$tokenBalance',
@@ -85,10 +80,16 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: TextField(
                               controller: codeController,
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255)),
                               decoration: InputDecoration(
                                 labelText: 'Enter Unique Code',
+                                labelStyle: TextStyle(
+                                    fontSize: 20.0, color: Color(0xFFFFFFFF)),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderSide: BorderSide(
+                                      color: Color(0xFFffbe00), width: 5.0),
+                                  borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
                             ),
@@ -102,13 +103,16 @@ class _HomePageState extends State<HomePage> {
                               Text(
                                 'Claim\t',
                                 style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w700),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: Color.fromARGB(255, 255, 255, 255)),
                               ),
                               CircleAvatar(
                                 radius: 30,
-                                backgroundColor: Color(0xff4c505b),
+                                backgroundColor: Color(0xFFffbe00),
                                 child: IconButton(
-                                    color: Colors.white,
+                                    color:
+                                        const Color.fromARGB(255, 29, 28, 28),
                                     onPressed: () {
                                       _incrementBalance(codeController.text);
                                       codeController.clear();

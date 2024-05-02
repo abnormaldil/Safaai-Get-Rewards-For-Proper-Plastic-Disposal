@@ -20,13 +20,13 @@ class _BottomNavState extends State<BottomNav> {
   late HomePage homePage;
   late ProfilePage profilePage;
   late RedeemPage redeemPage;
-  late TransactionHistoryScreen transactionHistoryScreen;
+  late TransactionPage transactionHistoryScreen;
 
   @override
   void initState() {
     homePage = HomePage();
     redeemPage = RedeemPage();
-    transactionHistoryScreen = TransactionHistoryScreen();
+    transactionHistoryScreen = TransactionPage();
     profilePage = ProfilePage();
     pages = [homePage, redeemPage, transactionHistoryScreen, profilePage];
     super.initState();
@@ -37,8 +37,8 @@ class _BottomNavState extends State<BottomNav> {
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
           height: 75,
-          backgroundColor: Colors.white,
-          color: const Color.fromARGB(255, 0, 0, 0),
+          backgroundColor: Color(0xFF1e1f21),
+          color: Color(0xFFffbe00),
           animationDuration: Duration(milliseconds: 500),
           onTap: (int index) {
             setState(() {
@@ -48,19 +48,19 @@ class _BottomNavState extends State<BottomNav> {
           items: [
             Icon(
               Icons.home_outlined,
-              color: Colors.white,
+              color: const Color.fromARGB(255, 23, 23, 23),
             ),
             Icon(
               Icons.wallet_outlined,
-              color: Colors.white,
+              color: const Color.fromARGB(255, 23, 23, 23),
             ),
             Icon(
               Icons.history_outlined,
-              color: Colors.white,
+              color: const Color.fromARGB(255, 23, 23, 23),
             ),
             Icon(
               Icons.person_outline,
-              color: Colors.white,
+              color: const Color.fromARGB(255, 23, 23, 23),
             )
           ]),
       body: pages[currentTabIndex],

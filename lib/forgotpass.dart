@@ -64,16 +64,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         ),
         body: Stack(
           children: [
-            Container(
-              padding: EdgeInsets.only(left: 35, top: 30),
-              child: Text(
-                'Reset\nPassword',
-                style: TextStyle(color: Colors.white, fontSize: 33),
-              ),
-            ),
-            SizedBox(
-              height: 40,
-            ),
             SingleChildScrollView(
               child: Form(
                 key: _formkey,
@@ -87,6 +77,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         margin: EdgeInsets.only(left: 35, right: 35),
                         child: Column(
                           children: [
+                            SizedBox(
+                              height: 80,
+                            ),
                             TextFormField(
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -131,14 +124,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 width: 140,
                                 padding: EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    color: Color(0xFFffbe00),
                                     borderRadius: BorderRadius.circular(30)),
                                 child: Center(
                                   child: Text(
                                     "Send Email",
                                     style: TextStyle(
-                                        color: const Color.fromARGB(
-                                            255, 23, 23, 23),
+                                        color: Color.fromARGB(255, 31, 30, 30),
                                         fontSize: 18.0,
                                         fontWeight: FontWeight.bold),
                                   ),

@@ -20,7 +20,7 @@ void main() async {
       '/login': (context) => LoginPage(),
       '/home': (context) => HomePage(),
       '/forgotpass': (context) => ForgotPasswordPage(),
-      '/transaction': (context) => TransactionHistoryScreen(),
+      '/transaction': (context) => TransactionPage(),
       '/profile': (context) => ProfilePage(),
       '/redeem': (context) => RedeemPage(),
     },

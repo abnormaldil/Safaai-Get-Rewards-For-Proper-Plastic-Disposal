@@ -108,144 +108,143 @@ class _LoginPageState extends State<LoginPage> {
             image: AssetImage('assets/login.png'), fit: BoxFit.cover),
       ),
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(0, 25, 25, 25),
-        body: Stack(
-          children: [
-            Container(),
-            Container(
-              padding: EdgeInsets.only(left: 35, top: 175),
-              child: Text(
-                'Welcome\nBack',
-                style: TextStyle(color: Colors.white, fontSize: 33),
-              ),
-            ),
-            SingleChildScrollView(
-              child: Form(
-                key: _formkey,
-                child: Container(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.45),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(left: 35, right: 35),
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please Enter Email';
-                                }
-                                return null;
-                              },
-                              controller: emailcontroller,
-                              style: TextStyle(
-                                  color: const Color.fromARGB(255, 23, 23, 23)),
-                              decoration: InputDecoration(
-                                  fillColor:
-                                      const Color.fromARGB(255, 255, 255, 255),
-                                  filled: true,
-                                  hintText: "Email",
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  )),
-                            ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            TextFormField(
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please Enter Password';
-                                }
-                                return null;
-                              },
-                              controller: passwordcontroller,
-                              style: TextStyle(),
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                  fillColor:
-                                      const Color.fromARGB(255, 255, 255, 255),
-                                  filled: true,
-                                  hintText: "Password",
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  )),
-                            ),
-                            SizedBox(
-                              height: 40,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                if (_formkey.currentState!.validate()) {
-                                  setState(() {
-                                    email = emailcontroller.text;
-                                    password = passwordcontroller.text;
-                                  });
-                                }
-                                userLogin();
-                              },
-                              child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 13.0, horizontal: 13.0),
-                                  decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 30, 30, 30),
-                                      borderRadius: BorderRadius.circular(30)),
-                                  child: Center(
-                                      child: Text(
-                                    "Sign In",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 22.0,
-                                        fontWeight: FontWeight.w500),
-                                  ))),
-                            ),
-                            SizedBox(
-                              height: 40,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TextButton(
+        backgroundColor: Colors.transparent,
+        body: Center(
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formkey,
+              child: Container(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.45),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 35, right: 35),
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please Enter Email';
+                              }
+                              return null;
+                            },
+                            controller: emailcontroller,
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                            decoration: InputDecoration(
+                                fillColor: Color.fromARGB(0, 255, 255, 255),
+                                filled: true,
+                                hintText: "Email",
+                                hintStyle: TextStyle(
+                                    fontSize: 20.0,
+                                    color: const Color.fromARGB(
+                                        255, 255, 255, 255)),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color.fromARGB(255, 254, 215, 20),
+                                      width: 5.0),
+                                  borderRadius: BorderRadius.circular(50),
+                                )),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          TextFormField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please Enter Password';
+                              }
+                              return null;
+                            },
+                            controller: passwordcontroller,
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                            obscureText: true,
+                            decoration: InputDecoration(
+                                fillColor: Color.fromARGB(0, 255, 255, 255),
+                                filled: true,
+                                hintText: "Password",
+                                hintStyle: TextStyle(
+                                    fontSize: 20.0, color: Color(0xFFFFFFFF)),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(0xFFffbe00), width: 5.0),
+                                  borderRadius: BorderRadius.circular(50),
+                                )),
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              if (_formkey.currentState!.validate()) {
+                                setState(() {
+                                  email = emailcontroller.text;
+                                  password = passwordcontroller.text;
+                                });
+                              }
+                              userLogin();
+                            },
+                            child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 13.0, horizontal: 13.0),
+                                decoration: BoxDecoration(
+                                    color: Color(0xFFffbe00),
+                                    borderRadius: BorderRadius.circular(30)),
+                                child: Center(
+                                    child: Text(
+                                  "Sign In",
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 30, 29, 29),
+                                      fontSize: 22.0,
+                                      fontWeight: FontWeight.w500),
+                                ))),
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/register');
+                                },
+                                child: Text(
+                                  'Sign Up',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      decoration: TextDecoration.none,
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      fontSize: 18),
+                                ),
+                                style: ButtonStyle(),
+                              ),
+                              TextButton(
                                   onPressed: () {
-                                    Navigator.pushNamed(context, '/register');
+                                    Navigator.pushNamed(context, '/forgotpass');
                                   },
                                   child: Text(
-                                    'Sign Up',
-                                    textAlign: TextAlign.left,
+                                    'Forgot Password',
                                     style: TextStyle(
-                                        decoration: TextDecoration.underline,
-                                        color: Color(0xff4c505b),
-                                        fontSize: 18),
-                                  ),
-                                  style: ButtonStyle(),
-                                ),
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.pushNamed(
-                                          context, '/forgotpass');
-                                    },
-                                    child: Text(
-                                      'Forgot Password',
-                                      style: TextStyle(
-                                        decoration: TextDecoration.underline,
-                                        color: Color(0xff4c505b),
-                                        fontSize: 18,
-                                      ),
-                                    )),
-                              ],
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                                      decoration: TextDecoration.none,
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      fontSize: 18,
+                                    ),
+                                  )),
+                            ],
+                          )
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
