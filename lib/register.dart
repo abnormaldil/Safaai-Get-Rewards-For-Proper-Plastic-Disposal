@@ -1,3 +1,5 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:safaai/home.dart';
@@ -12,14 +14,25 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   String name = "", email = "", phone = "", password = "", upi = "";
-  TextEditingController namecontroller = new TextEditingController();
-  TextEditingController emailcontroller = new TextEditingController();
-  TextEditingController phonecontroller = new TextEditingController();
-  TextEditingController passwordcontroller = new TextEditingController();
-  TextEditingController upicontroller = new TextEditingController();
+  final namecontroller = TextEditingController();
+  //TextEditingController emailcontroller = new TextEditingController();
+  final phonecontroller = TextEditingController();
+  final passwordcontroller = TextEditingController();
+  final upicontroller = TextEditingController();
+  final emailcontroller = TextEditingController();
   final _formkey = GlobalKey<FormState>();
 
-  registration() async {
+  void dispose() {
+    namecontroller.dispose();
+    emailcontroller.dispose();
+    passwordcontroller.dispose();
+    phonecontroller.dispose();
+    upicontroller.dispose();
+    super.dispose();
+  }
+
+
+  void registration() async {
     if (password != null &&
         namecontroller.text != "" &&
         emailcontroller.text != "" &&
@@ -27,7 +40,18 @@ class _RegisterPageState extends State<RegisterPage> {
         upicontroller.text != "") {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(email: email, password: password);
+    .createUserWithEmailAndPassword(email: email, password: password);
+String uid = userCredential.user!.uid; // Get the UID
+
+      await FirebaseFirestore.instance.collection('users').doc(uid).set({
+        'Name': namecontroller.text.trim(),
+        'Email': emailcontroller.text.trim(),
+        'Phone Number': int.parse(phonecontroller.text.trim()),
+        'Upi Id': upicontroller.text.trim(),
+        'CreditBalance': 0,
+      });
+        
+   
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(
           "Yeeyy, Let's Go!",

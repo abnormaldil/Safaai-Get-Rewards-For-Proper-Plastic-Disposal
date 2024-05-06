@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
 
   userLogin() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
+       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(
@@ -250,3 +250,4 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+  

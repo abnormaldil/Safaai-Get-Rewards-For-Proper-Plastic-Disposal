@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:safaai/bottomnav.dart';
 import 'package:safaai/forgotpass.dart';
 import 'package:safaai/home.dart';
 import 'package:safaai/login.dart';
+import 'package:safaai/mainpage.dart';
 import 'package:safaai/profile.dart';
 import 'package:safaai/redeem.dart';
 import 'package:safaai/register.dart';
@@ -14,7 +14,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: LoginPage(),
+    home: MainPage(),
     routes: {
       '/register': (context) => RegisterPage(),
       '/login': (context) => LoginPage(),
@@ -23,6 +23,7 @@ void main() async {
       '/transaction': (context) => TransactionPage(),
       '/profile': (context) => ProfilePage(),
       '/redeem': (context) => RedeemPage(),
+      '/mainpage':(context) => MainPage(),
     },
   ));
   Widget build(BuildContext context) {
