@@ -7,6 +7,7 @@ import 'package:safaai/mainpage.dart';
 import 'package:safaai/profile.dart';
 import 'package:safaai/redeem.dart';
 import 'package:safaai/register.dart';
+import 'package:safaai/splash.dart';
 import 'package:safaai/transaction.dart';
 
 void main() async {
@@ -14,7 +15,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: MainPage(),
+    home: SplashScreen(),
     routes: {
       '/register': (context) => RegisterPage(),
       '/login': (context) => LoginPage(),
@@ -23,7 +24,7 @@ void main() async {
       '/transaction': (context) => TransactionPage(),
       '/profile': (context) => ProfilePage(),
       '/redeem': (context) => RedeemPage(),
-      '/mainpage':(context) => MainPage(),
+      '/mainpage': (context) => MainPage(),
     },
   ));
   Widget build(BuildContext context) {

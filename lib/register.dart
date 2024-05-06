@@ -33,6 +33,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
   void registration() async {
+    // ignore: unnecessary_null_comparison
     if (password != null &&
         namecontroller.text != "" &&
         emailcontroller.text != "" &&

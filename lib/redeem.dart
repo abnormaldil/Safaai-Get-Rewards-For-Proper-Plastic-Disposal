@@ -1,83 +1,113 @@
-// Example snippet for redeem.dart
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class RedeemPage extends StatelessWidget {
+  final User? user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/redeem.png'), fit: BoxFit.cover),
-        ),
-        child: Scaffold(
-            backgroundColor: Colors.transparent,
+    return StreamBuilder<DocumentSnapshot>(
+      stream: user != null
+          ? FirebaseFirestore.instance
+              .collection('users')
+              .doc(user!.uid)
+              .snapshots()
+          : null,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        Map<String, dynamic>? userData = snapshot.data?.data() as Map<String, dynamic>?;
+        if (userData != null) {
+          int creditBalance = userData['CreditBalance'];
+          return _buildRedeemUI(context, creditBalance, userData);
+        } else {
+          // Handle the case where user data is null (e.g., show an error message)
+          print('Error: User data not found in Firestore');
+          return Scaffold(
             body: Center(
-                child: SingleChildScrollView(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(110),
-                      child: Column(),
-                    ),
-                    // SizedBox(height: 10),
-                    // Container(
-                    //   padding: EdgeInsets.all(10),
-                    //   child: Column(
-                    //     children: [
-                    //       Padding(
-                    //         padding: const EdgeInsets.symmetric(horizontal: 20),
-                    //         child: TextField(
-                    //           style: TextStyle(
-                    //               color: Color.fromARGB(255, 255, 255, 255)),
-                    //           decoration: InputDecoration(
-                    //             labelText: 'Enter Unique Code',
-                    //             labelStyle: TextStyle(
-                    //                 fontSize: 20.0, color: Color(0xFFFFFFFF)),
-                    //             border: OutlineInputBorder(
-                    //               borderSide: BorderSide(
-                    //                   color: Color(0xFFffbe00), width: 5.0),
-                    //               borderRadius: BorderRadius.circular(50),
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       SizedBox(
-                    //         height: 30,
-                    //       ),
-                    //       Row(
-                    //         mainAxisAlignment: MainAxisAlignment.end,
-                    //         children: [
-                    //           Text(
-                    //             'Claim\t',
-                    //             style: TextStyle(
-                    //                 fontSize: 20,
-                    //                 fontWeight: FontWeight.w700,
-                    //                 color: Color.fromARGB(255, 255, 255, 255)),
-                    //           ),
-                    //           CircleAvatar(
-                    //             radius: 30,
-                    //             backgroundColor: Color(0xFFffbe00),
-                    //             child: IconButton(
-                    //                 color:
-                    //                     const Color.fromARGB(255, 29, 28, 28),
-                    //                 onPressed: () {
-                    //                   // Navigator.pushNamed(
-                    //                   //     context, '/bottomnav');
-                    //                 },
-                    //                 icon: Icon(
-                    //                   Icons.chevron_right_rounded,
-                    //                 )),
-                    //           )
-                    //         ],
-                    //       ),
-                    //       // SizedBox(
-                    //       //   height: 40,
-                    //       // ),
-                    //     ],
-                    //   ),
-                    // )
-                  ]),
-            ))));
+              child: Text('Error: User data not found in Firestore'),
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  Widget _buildRedeemUI(BuildContext context, int creditBalance, Map<String, dynamic> userData) {
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/redeem.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Scaffold(
+       backgroundColor: Colors.transparent,
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Credit Balance:',
+                  style: TextStyle(fontSize: 20, color:Color.fromARGB(255, 255, 255, 255)),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  creditBalance.toString(),
+                  style: TextStyle(fontSize: 90, fontWeight: FontWeight.bold,color:Color.fromARGB(255, 255, 255, 255) ),
+                ),
+                SizedBox(height: 20),
+              
+                CircleAvatar(
+                            radius: 30,
+                            backgroundColor: Color(0xFFffbe00),
+                            child: IconButton(
+                              color: const Color.fromARGB(255, 29, 28, 28),
+                              onPressed: () => _redeemCredits(context, creditBalance, userData),
+                              icon: Icon(Icons.chevron_right_rounded),
+                            ),
+                          ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _redeemCredits(BuildContext context, int creditBalance, Map<String, dynamic> userData) {
+    if (creditBalance % 100 == 0 && creditBalance >= 100) {
+      int redeemedCredit = 100; // Assuming redemption of 100 credits
+      int newCreditBalance = creditBalance - redeemedCredit;
+
+      // Update credit balance in Firestore
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .update({'CreditBalance': newCreditBalance});
+
+      // Update credit balance locally
+      userData['CreditBalance'] = newCreditBalance;
+
+      // Show success message or perform UI updates
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Redeemed $redeemedCredit Credits!'),
+        ),
+      );
+    } else {
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Insufficient balance or invalid amount for redemption.',
+          ),
+        ),
+      );
+    }
   }
 }

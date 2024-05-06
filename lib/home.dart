@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
 
             transaction.update(userDocRef, {'CreditBalance': newCreditBalance});
           });
+          
 
           setState(() {
             CreditBalance = (int.parse(CreditBalance) + 10).toString();
@@ -141,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Container(
                   padding: EdgeInsets.all(10),
-                                    child: Column(
+                    child: Column(
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
