@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:safaai/home.dart';
 import 'package:safaai/login.dart';
 
+
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
@@ -47,8 +48,8 @@ String uid = userCredential.user!.uid; // Get the UID
       await FirebaseFirestore.instance.collection('users').doc(uid).set({
         'Name': namecontroller.text.trim(),
         'Email': emailcontroller.text.trim(),
-        'Phone Number': int.parse(phonecontroller.text.trim()),
-        'Upi Id': upicontroller.text.trim(),
+        'PhoneNumber': int.parse(phonecontroller.text.trim()),
+        'UpiId': upicontroller.text.trim(),
         'CreditBalance': 0,
       });
         
@@ -67,6 +68,7 @@ String uid = userCredential.user!.uid; // Get the UID
             context: context,
             builder: (context) {
               return AlertDialog(
+                backgroundColor: Color(0xFFffbe00),
                 title: Text('Invalid Email'),
                 content: Text(
                     'That Email Might Be Missing a Few Pieces. Try Again!'),
@@ -86,6 +88,7 @@ String uid = userCredential.user!.uid; // Get the UID
             context: context,
             builder: (context) {
               return AlertDialog(
+                backgroundColor: Color(0xFFffbe00),
                 title: Text('Weak Password'),
                 content: Text('Your Password Need More Strength'),
                 actions: [
@@ -104,6 +107,7 @@ String uid = userCredential.user!.uid; // Get the UID
             context: context,
             builder: (context) {
               return AlertDialog(
+                backgroundColor: Color(0xFFffbe00),
                 title: Text('Hey I Know You!'),
                 content: Text(
                     'Account already exists for this Email. Login instead'),
@@ -138,7 +142,7 @@ String uid = userCredential.user!.uid; // Get the UID
               key: _formkey,
               child: Container(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.23),
+                    top: MediaQuery.of(context).size.height * 0.1),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -146,6 +150,21 @@ String uid = userCredential.user!.uid; // Get the UID
                       margin: EdgeInsets.only(left: 35, right: 35),
                       child: Column(
                         children: [
+                          Text(
+                                  'CREATE\nACCOUNT',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      decoration: TextDecoration.none,
+                                      fontSize: 70,
+                                      fontWeight: FontWeight.w900,
+                                      fontFamily: 'BebasNeue',
+                                      color: Colors.white),
+                                ),
+                                
+                               
+                          SizedBox(
+                            height: 13,
+                          ),
                           TextFormField(
                             validator: (value) {
                               if (value == null || value.isEmpty) {

@@ -23,9 +23,12 @@ class _LoginPageState extends State<LoginPage> {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+         backgroundColor:  Color.fromARGB(255, 29, 28, 28),
           content: Text(
+            
         "Let's Clean Earth!",
         style: TextStyle(fontSize: 20.0),
+        
       )));
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => BottomNav()));
@@ -47,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
           context: context,
           builder: (context) {
             return AlertDialog(
+              backgroundColor: Color(0xFFffbe00),
               title: Text('Invalid Email'),
               content: Text('The entered Email is invalid. Please try again.'),
               actions: [
@@ -65,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
           context: context,
           builder: (context) {
             return AlertDialog(
+              backgroundColor: Color(0xFFffbe00),
               title: Text('Invalid Password'),
               content:
                   Text('The entered Password is invalid. Please try again.'),
@@ -84,6 +89,7 @@ class _LoginPageState extends State<LoginPage> {
           context: context,
           builder: (context) {
             return AlertDialog(
+              backgroundColor: Color(0xFFffbe00),
               title: Text('Who are you?'),
               content: Text("We don't know you. SignUp instead."),
               actions: [

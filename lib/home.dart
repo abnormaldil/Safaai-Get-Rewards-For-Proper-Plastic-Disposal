@@ -1,6 +1,3 @@
-
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +39,7 @@ class _HomePageState extends State<HomePage> {
             builder: (context) {
               return AlertDialog(
                 title: Text('Success'),
+                backgroundColor: Color(0xFFffbe00),
                 content: Text('Your token balance has been increased by 10.'),
                 actions: [
                   TextButton(
@@ -58,6 +56,7 @@ class _HomePageState extends State<HomePage> {
           context: context,
           builder: (context) {
             return AlertDialog(
+              backgroundColor: Color(0xFFffbe00),
               title: Text('Error'),
               content: Text('An error occurred: $error'),
               actions: [
@@ -75,6 +74,7 @@ class _HomePageState extends State<HomePage> {
         context: context,
         builder: (context) {
           return AlertDialog(
+            backgroundColor: Color(0xFFffbe00),
             title: Text('Invalid Code'),
             content: Text('The entered code is invalid. Please try again.'),
             actions: [
@@ -120,16 +120,35 @@ class _HomePageState extends State<HomePage> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        appBar:AppBar( 
+  backgroundColor: Colors.transparent, 
+  title: Text(
+    'Safaai',
+    style: TextStyle(
+      fontSize: 25,
+      color: Color.fromARGB(255, 255, 255, 255), 
+      fontFamily: 'AvantGardeLT',
+    ),
+  ),
+),
         body: Center(
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.all(110),
+                  padding: EdgeInsets.all(100),
                   child: Column(
                     children: [
-                      SizedBox(height: 10),
+                      // Text(
+                      //   'BALANCE',
+                      //   style: TextStyle(
+                      //     fontSize: 35.0,
+                      //     fontWeight: FontWeight.bold,
+                      //     fontFamily: 'BebasNeue',
+                      //   ),
+                      // ),
+                   
                       Text(
                         '$CreditBalance',
                         style: TextStyle(
@@ -176,6 +195,7 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
+                              fontFamily: 'BebasNeue',
                               color: Color.fromARGB(255, 255, 255, 255),
                             ),
                           ),
