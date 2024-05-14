@@ -23,27 +23,34 @@ class _LoginPageState extends State<LoginPage> {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-         backgroundColor:  Color.fromARGB(255, 29, 28, 28),
+          backgroundColor: Color.fromARGB(255, 29, 28, 28),
           content: Text(
-            
-        "Let's Clean Earth!",
-        style: TextStyle(fontSize: 20.0),
-        
-      )));
-      Navigator.push(
+            "Let's Clean Earth!",
+            style: TextStyle(fontSize: 20.0),
+          )));
+      Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => BottomNav()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Color.fromARGB(255, 48, 45, 45),
-            content: Text(
-              "We don't know you!",
-              style: TextStyle(
-                decoration: TextDecoration.none,
-                color: Color.fromARGB(255, 30, 29, 29),
-                fontSize: 18,
-              ),
-            )));
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              backgroundColor: Color(0xFFffbe00),
+              title: Text('We Dont Know You!'),
+              content:
+                  Text('Please introduce yourself by registering in our app.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the dialog
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
       }
       if (e.code == 'invalid-email') {
         showDialog(
@@ -64,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
             );
           },
         );
-      } else if (e.code == 'wrong-password') {
+      } else if (e.code == "wrong-password") {
         showDialog(
           context: context,
           builder: (context) {
@@ -116,7 +123,8 @@ class _LoginPageState extends State<LoginPage> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Center(
+        body: Container(
+          margin: EdgeInsets.only(left: 15, right: 15, top: 10),
           child: SingleChildScrollView(
             child: Form(
               key: _formkey,
@@ -203,7 +211,7 @@ class _LoginPageState extends State<LoginPage> {
                                     borderRadius: BorderRadius.circular(30)),
                                 child: Center(
                                     child: Text(
-                                  "Sign In",
+                                  "Log In",
                                   style: TextStyle(
                                       color: Color.fromARGB(255, 30, 29, 29),
                                       fontSize: 22.0,

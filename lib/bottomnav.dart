@@ -18,9 +18,9 @@ class _BottomNavState extends State<BottomNav> {
   late List<Widget> pages;
   late Widget currentPage;
   late HomePage homePage;
-  late ProfilePage profilePage;
   late RedeemPage redeemPage;
   late TransactionPage transactionHistoryScreen;
+  late ProfilePage profilePage;
 
   @override
   void initState() {

@@ -1,10 +1,10 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_otp/email_otp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:safaai/home.dart';
 import 'package:safaai/login.dart';
-
+import 'package:safaai/otp_screen.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -22,6 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final upicontroller = TextEditingController();
   final emailcontroller = TextEditingController();
   final _formkey = GlobalKey<FormState>();
+  EmailOTP myauth = EmailOTP();
 
   void dispose() {
     namecontroller.dispose();
@@ -32,7 +33,6 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
-
   void registration() async {
     // ignore: unnecessary_null_comparison
     if (password != null &&
@@ -42,26 +42,47 @@ class _RegisterPageState extends State<RegisterPage> {
         upicontroller.text != "") {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
-    .createUserWithEmailAndPassword(email: email, password: password);
-String uid = userCredential.user!.uid; // Get the UID
+            .createUserWithEmailAndPassword(email: email, password: password);
+        String uid = userCredential.user!.uid; // Get the UID
 
-      await FirebaseFirestore.instance.collection('users').doc(uid).set({
-        'Name': namecontroller.text.trim(),
-        'Email': emailcontroller.text.trim(),
-        'PhoneNumber': int.parse(phonecontroller.text.trim()),
-        'UpiId': upicontroller.text.trim(),
-        'CreditBalance': 0,
-      });
-        
-   
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-          "Yeeyy, Let's Go!",
-          style: TextStyle(fontSize: 20.0),
-        )));
-        // ignore: use_build_context_synchronously
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginPage()));
+        myauth.setConfig(
+          appEmail: "safaai.rit@gmail.com",
+          appName: "Safaai",
+          userEmail: email,
+          otpLength: 4,
+          otpType: OTPType.digitsOnly,
+        );
+
+        if (await myauth.sendOTP()) {
+          // OTP sent successfully
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("OTP has been sent"),
+          ));
+
+          // Navigate to OTP verification screen
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OtpScreen(
+                myauth: myauth,
+                userEmail: emailcontroller.text,
+              ),
+            ),
+          );
+        } else {
+          // Failed to send OTP
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("Oops, OTP send failed"),
+          ));
+        }
+
+        await FirebaseFirestore.instance.collection('users').doc(uid).set({
+          'Name': namecontroller.text.trim(),
+          'Email': emailcontroller.text.trim(),
+          'PhoneNumber': int.parse(phonecontroller.text.trim()),
+          'UpiId': upicontroller.text.trim(),
+          'CreditBalance': 0,
+        });
       } on FirebaseAuthException catch (e) {
         if (e.code == 'invalid-email') {
           showDialog(
@@ -136,7 +157,8 @@ String uid = userCredential.user!.uid; // Get the UID
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Center(
+        body: Container(
+          margin: EdgeInsets.only(left: 15, right: 15, top: 10),
           child: SingleChildScrollView(
             child: Form(
               key: _formkey,
@@ -151,17 +173,15 @@ String uid = userCredential.user!.uid; // Get the UID
                       child: Column(
                         children: [
                           Text(
-                                  'CREATE\nACCOUNT',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      decoration: TextDecoration.none,
-                                      fontSize: 70,
-                                      fontWeight: FontWeight.w900,
-                                      fontFamily: 'BebasNeue',
-                                      color: Colors.white),
-                                ),
-                                
-                               
+                            'CREATE\nACCOUNT',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                decoration: TextDecoration.none,
+                                fontSize: 70,
+                                fontWeight: FontWeight.w900,
+                                fontFamily: 'BebasNeue',
+                                color: Colors.white),
+                          ),
                           SizedBox(
                             height: 13,
                           ),

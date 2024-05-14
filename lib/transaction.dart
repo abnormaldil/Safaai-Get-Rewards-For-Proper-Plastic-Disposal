@@ -23,6 +23,7 @@ class _TransactionPageState extends State<TransactionPage> {
   }
 
   @override
+  
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -33,38 +34,36 @@ class _TransactionPageState extends State<TransactionPage> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar:AppBar(
-  centerTitle: true, 
-  backgroundColor: Colors.transparent, 
-  title: Text(
-    'Transactions',
-    style: TextStyle(
-      fontSize: 60,
-      color: Color.fromARGB(255, 255, 255, 255), 
-      fontFamily: 'BebasNeue',
-    ),
-  ),
-),
-
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          title: Text(
+            'Transactions',
+            style: TextStyle(
+              fontSize: 60,
+              color: Color.fromARGB(255, 255, 255, 255),
+              fontFamily: 'BebasNeue',
+            ),
+          ),
+        ),
         body: StreamBuilder<QuerySnapshot>(
-          
           stream: transactionsStream,
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Center(child: CircularProgressIndicator());
             }
-      
+
             if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             }
-      
+
             List<DocumentSnapshot> transactions = snapshot.data!.docs;
-      
+
             return ListView.builder(
               itemCount: transactions.length,
               itemBuilder: (context, index) {
                 DocumentSnapshot transaction = transactions[index];
-      
+
                 return _buildTransactionTile(context, transaction);
               },
             );
@@ -74,33 +73,35 @@ class _TransactionPageState extends State<TransactionPage> {
     );
   }
 
-  Widget _buildTransactionTile(BuildContext context, DocumentSnapshot transaction) {
+  Widget _buildTransactionTile(
+      BuildContext context, DocumentSnapshot transaction) {
     Timestamp transactionTime = transaction['Time'];
     int redeemedAmount = transaction['RedeemAmount'];
-  
 
     return ListTile(
-      
-      title: Text('$redeemedAmount''\tCoins' ,style: TextStyle(
-      fontSize: 40,
-      color: Color.fromARGB(255, 255, 255, 255), 
-      fontFamily: 'BebasNeue',
-    ),),
+      title: Text(
+        '$redeemedAmount' '\tCoins',
+        style: TextStyle(
+          fontSize: 40,
+          color: Color.fromARGB(255, 255, 255, 255),
+          fontFamily: 'BebasNeue',
+        ),
+      ),
       subtitle: Text(
-        'Date: ${transactionTime.toDate().toString()}', style: TextStyle(
-      fontSize: 20,
-      color: Color.fromARGB(255, 255, 255, 255), 
-      fontFamily: 'BebasNeue',
-    ),
+        'Date: ${transactionTime.toDate().toString()}',
+        style: TextStyle(
+          fontSize: 20,
+          color: Color.fromARGB(255, 255, 255, 255),
+          fontFamily: 'BebasNeue',
+        ),
       ),
       trailing: Row(
-      mainAxisSize: MainAxisSize.min, // Restrict trailing widget size
-      children: [
-        Icon(Icons.check_circle, color: Color.fromARGB(255, 9, 220, 16),size: 30), // UPI ID icon
-       
-       
-      ],
-    ),// Display UPI ID and Email
+        mainAxisSize: MainAxisSize.min, // Restrict trailing widget size
+        children: [
+          Icon(Icons.check_circle,
+              color: Color.fromARGB(255, 9, 220, 16), size: 30), // UPI ID icon
+        ],
+      ), // Display UPI ID and Email
     );
   }
 }

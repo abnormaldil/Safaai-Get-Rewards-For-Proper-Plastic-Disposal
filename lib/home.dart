@@ -11,7 +11,18 @@ class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser;
   String CreditBalance = '0';
   TextEditingController codeController = TextEditingController();
-  Set<String> validCodes = {"SAF123", "SAF345", "SAF567", "SAF789"};
+  Set<String> validCodes = {
+    "SA23A2",
+    "GKA235",
+    "IKDFJ45",
+    "OER345",
+    "IOW523",
+    "SOEJ4A",
+    "OGJR04",
+    "UBXL245",
+    "KIG3454",
+    "VN45033"
+  };
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void _incrementBalance(String code) async {
@@ -23,12 +34,12 @@ class _HomePageState extends State<HomePage> {
 
           await _firestore.runTransaction((transaction) async {
             final docSnapshot = await transaction.get(userDocRef);
-            final int currentCreditBalance = docSnapshot.get('CreditBalance') ?? 0;
+            final int currentCreditBalance =
+                docSnapshot.get('CreditBalance') ?? 0;
             final int newCreditBalance = currentCreditBalance + 10;
 
             transaction.update(userDocRef, {'CreditBalance': newCreditBalance});
           });
-          
 
           setState(() {
             CreditBalance = (int.parse(CreditBalance) + 10).toString();
@@ -120,17 +131,17 @@ class _HomePageState extends State<HomePage> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar:AppBar( 
-  backgroundColor: Colors.transparent, 
-  title: Text(
-    'Safaai',
-    style: TextStyle(
-      fontSize: 25,
-      color: Color.fromARGB(255, 255, 255, 255), 
-      fontFamily: 'AvantGardeLT',
-    ),
-  ),
-),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: Text(
+            'Safaai',
+            style: TextStyle(
+              fontSize: 25,
+              color: Color.fromARGB(255, 255, 255, 255),
+              fontFamily: 'AvantGardeLT',
+            ),
+          ),
+        ),
         body: Center(
           child: SingleChildScrollView(
             child: Column(
@@ -148,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                       //     fontFamily: 'BebasNeue',
                       //   ),
                       // ),
-                   
+
                       Text(
                         '$CreditBalance',
                         style: TextStyle(
@@ -161,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Container(
                   padding: EdgeInsets.all(10),
-                    child: Column(
+                  child: Column(
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -204,7 +215,8 @@ class _HomePageState extends State<HomePage> {
                             backgroundColor: Color(0xFFffbe00),
                             child: IconButton(
                               color: const Color.fromARGB(255, 29, 28, 28),
-                              onPressed: () => _incrementBalance(codeController.text),
+                              onPressed: () =>
+                                  _incrementBalance(codeController.text),
                               icon: Icon(Icons.chevron_right_rounded),
                             ),
                           ),
@@ -221,4 +233,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-

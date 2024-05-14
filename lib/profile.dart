@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:safaai/login.dart';
 
 class ProfilePage extends StatelessWidget {
   final User? user = FirebaseAuth.instance.currentUser;
@@ -94,10 +95,11 @@ class ProfilePage extends StatelessWidget {
                     SizedBox(height: 40),
 
                     // Logout button
-                    GestureDetector(
-                      onTap: () async {
+                    GestureDetector (
+                      onTap: () async{
                         await FirebaseAuth.instance.signOut();
-                        // Handle successful logout or navigate to login page
+                        Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => LoginPage()));;
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.7,
@@ -113,7 +115,7 @@ class ProfilePage extends StatelessWidget {
                           child: Text(
                             "Log Out",
                             style: TextStyle(
-                             color: const Color.fromARGB(255, 29, 28, 28),
+                              color: const Color.fromARGB(255, 29, 28, 28),
                               fontSize: 22.0,
                               fontWeight: FontWeight.w500,
                             ),
