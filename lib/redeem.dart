@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RedeemPage extends StatelessWidget {
   final User? user = FirebaseAuth.instance.currentUser;
@@ -11,7 +12,7 @@ class RedeemPage extends StatelessWidget {
       stream: user != null
           ? FirebaseFirestore.instance
               .collection('users')
-              .doc(user!.uid)
+              .doc(user!.email) // Use email instead of UID
               .snapshots()
           : null,
       builder: (context, snapshot) {
@@ -40,66 +41,145 @@ class RedeemPage extends StatelessWidget {
   Widget _buildRedeemUI(
       BuildContext context, int creditBalance, Map<String, dynamic> userData) {
     return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/redeem.png'),
-          fit: BoxFit.cover,
-        ),
-      ),
+      // decoration: BoxDecoration(
+      //   image: DecorationImage(
+      //     image: AssetImage('assets/redeem.png'),
+      //     fit: BoxFit.cover,
+      //   ),
+      // ),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Credit Balance:',
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Color.fromARGB(
-                        255,
-                        255,
-                        255,
-                        255,
-                      ),
-                      fontFamily: 'BebasNeue'),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  creditBalance.toString(),
-                  style: TextStyle(
-                      fontSize: 90,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 255, 255, 255)),
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Redeem\t',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'BebasNeue',
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      ),
-                    ),
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundColor: Color(0xFFffbe00),
-                      child: IconButton(
-                        color: const Color.fromARGB(255, 29, 28, 28),
-                        onPressed: () =>
-                            _redeemCredits(context, creditBalance, userData),
-                        icon: Icon(Icons.chevron_right_rounded),
-                      ),
+        backgroundColor: Color(0xFF1e1f21),
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Color(0xFF1e1f21),
+          title: Text(
+            'Redeem',
+            style: TextStyle(
+              fontSize: 50,
+              color: Color.fromARGB(255, 255, 255, 255),
+              fontFamily: 'Gilroy',
+            ),
+          ),
+        ),
+        body: Container(
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.005),
+              SizedBox(
+                height: 0.0,
+              ),
+              Container(
+                alignment: Alignment.center,
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color.fromARGB(255, 255, 162, 0).withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 25,
+                      offset: Offset(0, 3),
                     ),
                   ],
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color.fromARGB(255, 74, 74, 79),
+                      Color.fromARGB(255, 19, 18, 18),
+                      Color.fromARGB(255, 39, 39, 40),
+                    ],
+                  ),
                 ),
-              ],
-            ),
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(height: 5.0),
+                      Icon(
+                        FontAwesomeIcons.leaf,
+                        size: 45.0, // Adjust the size as needed
+                        color: Color(0xFFffbe00),
+                      ),
+                      Text(
+                        creditBalance.toString(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 60,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 255, 255, 255),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 40),
+              Text(
+                'Redemption Guidelines:',
+                style: TextStyle(
+                  fontSize: 17,
+                  fontFamily: 'Gilroy',
+                  color: Color(0xFFffbe00),
+                ),
+              ),
+              SizedBox(height: 5),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '• Minimum redemption of 100 tokens',
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontFamily: 'Gilroy',
+                      color: Color.fromARGB(255, 255, 255, 255),
+                    ),
+                  ),
+                  Text(
+                    '• Redeemable in multiples of 100',
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontFamily: 'Gilroy',
+                      color: Color.fromARGB(255, 255, 255, 255),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Redeem\t',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Gilroy',
+                      color: Color.fromARGB(255, 255, 255, 255),
+                    ),
+                  ),
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Color(0xFFffbe00),
+                    child: IconButton(
+                      color: const Color.fromARGB(255, 29, 28, 28),
+                      onPressed: () =>
+                          _redeemCredits(context, creditBalance, userData),
+                      icon: Icon(Icons.chevron_right_rounded),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
           ),
         ),
       ),
@@ -114,7 +194,7 @@ class RedeemPage extends StatelessWidget {
 
       FirebaseFirestore.instance
           .collection('users')
-          .doc(user!.uid)
+          .doc(user!.email) // Use email instead of UID
           .update({'CreditBalance': newCreditBalance});
 
       userData['CreditBalance'] = newCreditBalance;
@@ -126,8 +206,8 @@ class RedeemPage extends StatelessWidget {
 
       FirebaseFirestore.instance
           .collection('transactions')
-          .doc(user!.uid)
-          .collection(user!.uid)
+          .doc(user!.email) // Use email instead of UID
+          .collection(user!.email!) // Use email instead of UID
           .add({
         'RedeemAmount': redeemedCredit,
         'Time': transactionTime,

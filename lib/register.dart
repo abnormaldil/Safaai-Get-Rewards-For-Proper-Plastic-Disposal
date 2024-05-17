@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:safaai/home.dart';
 import 'package:safaai/login.dart';
 import 'package:safaai/otp_screen.dart';
+import 'package:flutter/services.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -65,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
             MaterialPageRoute(
               builder: (context) => OtpScreen(
                 myauth: myauth,
-                userEmail: emailcontroller.text,
+                userEmail: emailcontroller.text.trim(),
               ),
             ),
           );
@@ -76,7 +77,10 @@ class _RegisterPageState extends State<RegisterPage> {
           ));
         }
 
-        await FirebaseFirestore.instance.collection('users').doc(uid).set({
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(emailcontroller.text.trim())
+            .set({
           'Name': namecontroller.text.trim(),
           'Email': emailcontroller.text.trim(),
           'PhoneNumber': int.parse(phonecontroller.text.trim()),
@@ -164,7 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
               key: _formkey,
               child: Container(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.1),
+                    top: MediaQuery.of(context).size.height * 0.05),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -172,15 +176,30 @@ class _RegisterPageState extends State<RegisterPage> {
                       margin: EdgeInsets.only(left: 35, right: 35),
                       child: Column(
                         children: [
-                          Text(
-                            'CREATE\nACCOUNT',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                decoration: TextDecoration.none,
-                                fontSize: 70,
-                                fontWeight: FontWeight.w900,
-                                fontFamily: 'BebasNeue',
-                                color: Colors.white),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Image.asset(
+                              //   'assets/adduser.png',
+                              //   width: 100,
+                              //   height: 100,
+                              // ),
+                              RotatedBox(
+                                quarterTurns:
+                                    3, // Rotate 90 degrees counterclockwise
+                                child: Text(
+                                  "May I Know\nYou?",
+                                  textAlign: TextAlign.justify,
+                                  style: TextStyle(
+                                    decoration: TextDecoration.none,
+                                    fontSize: 50,
+                                    fontWeight: FontWeight.w900,
+                                    fontFamily: 'Gilroy',
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           SizedBox(
                             height: 13,
@@ -250,11 +269,21 @@ class _RegisterPageState extends State<RegisterPage> {
                           TextFormField(
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please Enter Phone Number';
+                                return 'Please enter your phone number';
+                              } else if (value.length != 10) {
+                                return 'Please Enter a Valid 10-digit Number';
                               }
                               return null;
                             },
                             controller: phonecontroller,
+                            keyboardType: TextInputType
+                                .number, // Set keyboard type to number
+                            inputFormatters: [
+                              FilteringTextInputFormatter
+                                  .digitsOnly, // Allow only numeric input
+                              LengthLimitingTextInputFormatter(
+                                  10), // Limit input to 10 characters
+                            ],
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
@@ -345,11 +374,11 @@ class _RegisterPageState extends State<RegisterPage> {
                             onTap: () {
                               if (_formkey.currentState!.validate()) {
                                 setState(() {
-                                  email = emailcontroller.text;
-                                  name = namecontroller.text;
+                                  email = emailcontroller.text.trim();
+                                  name = namecontroller.text.trim();
                                   password = passwordcontroller.text;
-                                  phone = phonecontroller.text;
-                                  upi = upicontroller.text;
+                                  phone = phonecontroller.text.trim();
+                                  upi = upicontroller.text.trim();
                                 });
                               }
                               registration();

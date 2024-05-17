@@ -7,7 +7,6 @@ import 'package:safaai/transaction.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
-
   @override
   State<BottomNav> createState() => _BottomNavState();
 }
@@ -31,6 +30,8 @@ class _BottomNavState extends State<BottomNav> {
     pages = [homePage, redeemPage, transactionHistoryScreen, profilePage];
     super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TransactionPage extends StatefulWidget {
   @override
@@ -14,16 +15,17 @@ class _TransactionPageState extends State<TransactionPage> {
   @override
   void initState() {
     super.initState();
-    transactionsStream = FirebaseFirestore.instance
-        .collection('transactions')
-        .doc(user!.uid)
-        .collection(user!.uid) // Assuming subcollection with user's uid
-        .orderBy('Time', descending: true) // Order by Time (descending)
-        .snapshots();
+    if (user != null && user!.email != null) {
+      transactionsStream = FirebaseFirestore.instance
+          .collection('transactions')
+          .doc(user!.email)
+          .collection(user!.email!)
+          .orderBy('Time', descending: true)
+          .snapshots();
+    }
   }
 
   @override
-  
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -40,9 +42,9 @@ class _TransactionPageState extends State<TransactionPage> {
           title: Text(
             'Transactions',
             style: TextStyle(
-              fontSize: 60,
+              fontSize: 50,
               color: Color.fromARGB(255, 255, 255, 255),
-              fontFamily: 'BebasNeue',
+              fontFamily: 'Gilroy',
             ),
           ),
         ),
@@ -80,28 +82,31 @@ class _TransactionPageState extends State<TransactionPage> {
 
     return ListTile(
       title: Text(
-        '$redeemedAmount' '\tCoins',
+        '$redeemedAmount SaFi',
         style: TextStyle(
-          fontSize: 40,
-          color: Color.fromARGB(255, 255, 255, 255),
-          fontFamily: 'BebasNeue',
+          fontSize: 34,
+          color: Color(0xFFffbe00),
+          fontFamily: 'Gilroy',
         ),
       ),
       subtitle: Text(
         'Date: ${transactionTime.toDate().toString()}',
         style: TextStyle(
-          fontSize: 20,
+          fontSize: 15,
           color: Color.fromARGB(255, 255, 255, 255),
-          fontFamily: 'BebasNeue',
+          fontFamily: 'Gilroy',
         ),
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min, // Restrict trailing widget size
         children: [
-          Icon(Icons.check_circle,
-              color: Color.fromARGB(255, 9, 220, 16), size: 30), // UPI ID icon
+          Icon(
+            FontAwesomeIcons.check,
+            size: 35.0, // Adjust the size as needed
+            color: Color.fromARGB(255, 28, 253, 39),
+          ),
         ],
-      ), // Display UPI ID and Email
+      ),
     );
   }
 }

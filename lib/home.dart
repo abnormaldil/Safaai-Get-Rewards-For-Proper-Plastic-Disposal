@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -30,14 +31,14 @@ class _HomePageState extends State<HomePage> {
     if (validCodes.contains(code)) {
       try {
         if (user != null) {
-          final userDocRef = _firestore.collection('users').doc(user.uid);
-
+          final userDocRef = _firestore
+              .collection('users')
+              .doc(user.email); // Changed uid to email
           await _firestore.runTransaction((transaction) async {
             final docSnapshot = await transaction.get(userDocRef);
             final int currentCreditBalance =
                 docSnapshot.get('CreditBalance') ?? 0;
             final int newCreditBalance = currentCreditBalance + 10;
-
             transaction.update(userDocRef, {'CreditBalance': newCreditBalance});
           });
 
@@ -103,13 +104,16 @@ class _HomePageState extends State<HomePage> {
   void _getBalance() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      final docRef = _firestore.collection('users').doc(user.uid);
-      final docSnapshot = await docRef.get();
-      if (docSnapshot.exists) {
-        final creditBalance = docSnapshot.get('CreditBalance') ?? 0;
-        setState(() {
-          CreditBalance = creditBalance.toString();
-        });
+      final email = user.email;
+      if (email != null) {
+        final docRef = _firestore.collection('users').doc(email.trim());
+        final docSnapshot = await docRef.get();
+        if (docSnapshot.exists) {
+          final creditBalance = docSnapshot.get('CreditBalance') ?? 0;
+          setState(() {
+            CreditBalance = creditBalance.toString();
+          });
+        }
       }
     }
   }
@@ -122,113 +126,160 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/home.png'),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: Text(
-            'Safaai',
-            style: TextStyle(
-              fontSize: 25,
-              color: Color.fromARGB(255, 255, 255, 255),
-              fontFamily: 'AvantGardeLT',
-            ),
+    return Scaffold(
+      backgroundColor: Color(0xFFffbe00),
+      appBar: AppBar(
+        backgroundColor: Color(0xFFffbe00),
+        automaticallyImplyLeading: false,
+        title: Text(
+          'SaFaai',
+          style: TextStyle(
+            fontSize: 35,
+            color: Color.fromARGB(255, 255, 255, 255),
+            fontFamily: 'AvantGardeLT',
           ),
         ),
-        body: Center(
-          child: SingleChildScrollView(
+      ),
+      body: Stack(
+        children: [
+          Container(),
+          SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  padding: EdgeInsets.all(100),
-                  child: Column(
-                    children: [
-                      // Text(
-                      //   'BALANCE',
-                      //   style: TextStyle(
-                      //     fontSize: 35.0,
-                      //     fontWeight: FontWeight.bold,
-                      //     fontFamily: 'BebasNeue',
-                      //   ),
-                      // ),
-
-                      Text(
-                        '$CreditBalance',
-                        style: TextStyle(
-                          fontSize: 90.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: TextFormField(
-                          controller: codeController,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 1.4,
+                  child: DraggableScrollableSheet(
+                    builder: (BuildContext context,
+                        ScrollController scrollController) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF1e1f21),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(60),
+                            topRight: Radius.circular(60),
                           ),
-                          decoration: InputDecoration(
-                            labelText: 'Enter Unique Code',
-                            labelStyle: TextStyle(
-                              fontSize: 20.0,
-                              color: Color(0xFFFFFFFF),
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFFffbe00),
-                                width: 5.0,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(24.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Icon(
+                                Icons.keyboard_double_arrow_up_rounded,
+                                size: 45.0,
+                                color: Colors.white,
                               ),
-                              borderRadius: BorderRadius.circular(50),
-                            ),
+                              SizedBox(height: 20),
+                              Container(
+                                alignment: Alignment.center,
+                                width: 200,
+                                height: 200,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color.fromARGB(255, 255, 162, 0)
+                                          .withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 25,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color.fromARGB(255, 74, 74, 79),
+                                      Color.fromARGB(255, 19, 18, 18),
+                                      Color.fromARGB(255, 39, 39, 40),
+                                    ],
+                                  ),
+                                ),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SizedBox(height: 5.0),
+                                      Icon(
+                                        FontAwesomeIcons.leaf,
+                                        size: 45.0, // Adjust the size as needed
+                                        color: Color(0xFFffbe00),
+                                      ),
+                                      Text(
+                                        '$CreditBalance',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 60.0,
+                                          color: Color.fromARGB(
+                                              255, 255, 255, 255),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              TextFormField(
+                                controller: codeController,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                decoration: InputDecoration(
+                                  labelText: 'Enter Unique Code',
+                                  labelStyle: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                    borderSide: BorderSide(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              GestureDetector(
+                                onTap: () {
+                                  _incrementBalance(codeController.text.trim());
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 13.0,
+                                    horizontal: 13.0,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFffbe00),
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "Claim",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 22.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      SizedBox(height: 30),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            'Claim\t',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'BebasNeue',
-                              color: Color.fromARGB(255, 255, 255, 255),
-                            ),
-                          ),
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundColor: Color(0xFFffbe00),
-                            child: IconButton(
-                              color: const Color.fromARGB(255, 29, 28, 28),
-                              onPressed: () =>
-                                  _incrementBalance(codeController.text),
-                              icon: Icon(Icons.chevron_right_rounded),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                      );
+                    },
                   ),
                 ),
               ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }

@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:safaai/bottomnav.dart';
+import 'dart:math' as math;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
-
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
   String email = "", password = "";
-
   TextEditingController emailcontroller = new TextEditingController();
   TextEditingController passwordcontroller = new TextEditingController();
-
   final _formkey = GlobalKey<FormState>();
 
   userLogin() async {
@@ -130,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
               key: _formkey,
               child: Container(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.45),
+                    top: MediaQuery.of(context).size.height * 0.15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -138,6 +136,34 @@ class _LoginPageState extends State<LoginPage> {
                       margin: EdgeInsets.only(left: 35, right: 35),
                       child: Column(
                         children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              RotatedBox(
+                                quarterTurns:
+                                    3, // Rotate 90 degrees counterclockwise
+                                child: Text(
+                                  "Heyloo!",
+                                  textAlign: TextAlign.justify,
+                                  style: TextStyle(
+                                    decoration: TextDecoration.none,
+                                    fontSize: 50,
+                                    fontWeight: FontWeight.w900,
+                                    fontFamily: 'Gilroy',
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              Image.asset(
+                                'assets/welcome.png',
+                                width: 200,
+                                height: 200,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
                           TextFormField(
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -196,8 +222,8 @@ class _LoginPageState extends State<LoginPage> {
                             onTap: () {
                               if (_formkey.currentState!.validate()) {
                                 setState(() {
-                                  email = emailcontroller.text;
-                                  password = passwordcontroller.text;
+                                  email = emailcontroller.text.trim();
+                                  password = passwordcontroller.text.trim();
                                 });
                               }
                               userLogin();

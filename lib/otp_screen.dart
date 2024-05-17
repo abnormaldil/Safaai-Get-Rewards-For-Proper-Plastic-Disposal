@@ -1,5 +1,4 @@
 import 'package:email_otp/email_otp.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:safaai/login.dart';
@@ -134,7 +133,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     color: Color.fromARGB(255, 255, 255, 255),
                     fontSize: 60.0,
                     fontWeight: FontWeight.w500,
-                    fontFamily: "BebasNeue"),
+                    fontFamily: "Gilroy"),
               ),
               const SizedBox(
                 height: 5,

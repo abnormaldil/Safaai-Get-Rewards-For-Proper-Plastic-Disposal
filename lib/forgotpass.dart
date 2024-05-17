@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
-
   @override
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
@@ -11,7 +10,6 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   String email = "";
   TextEditingController emailcontroller = new TextEditingController();
-
   final _formkey = GlobalKey<FormState>();
 
   resetPassword() async {
@@ -58,10 +56,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
         body: Stack(
           children: [
             SingleChildScrollView(
@@ -69,7 +63,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 key: _formkey,
                 child: Container(
                   padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.28),
+                      top: MediaQuery.of(context).size.height * 0.2),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -77,8 +71,65 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         margin: EdgeInsets.only(left: 35, right: 35),
                         child: Column(
                           children: [
+                            const Text(
+                              'Forgot your password?',
+                              style: TextStyle(
+                                fontSize: 25,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontFamily: 'AvantGardeLT',
+                              ),
+                            ),
                             SizedBox(
-                              height: 80,
+                              height: 20,
+                            ),
+                            Image.asset(
+                              'assets/forgotpass.png',
+                              width: 150,
+                              height: 150,
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              'Dont Worry!',
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                  decoration: TextDecoration.none,
+                                  fontSize: 43,
+                                  fontWeight: FontWeight.w900,
+                                  fontFamily: 'Gilroy',
+                                  color: Colors.white),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 15, right: 15),
+                              child: RichText(
+                                textAlign: TextAlign.center,
+                                text: TextSpan(
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: 'Gilroy',
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text:
+                                          "We will send a Password Reset Link to\n",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    TextSpan(
+                                      text: email,
+                                      style: TextStyle(
+                                          color: Color(
+                                              0xFFffbe00)), // Change color here
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 40,
                             ),
                             TextFormField(
                               validator: (value) {
@@ -109,7 +160,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                   )),
                             ),
                             SizedBox(
-                              height: 40,
+                              height: 20,
                             ),
                             GestureDetector(
                               onTap: () {
