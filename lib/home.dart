@@ -261,7 +261,7 @@ class _HomePageState extends State<HomePage> {
                                     child: Text(
                                       "Claim",
                                       style: TextStyle(
-                                        color: Colors.white,
+                                        color: Color(0xFF1e1f21),
                                         fontSize: 22.0,
                                         fontWeight: FontWeight.w500,
                                       ),
