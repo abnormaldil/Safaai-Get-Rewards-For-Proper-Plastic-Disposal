@@ -1,3 +1,5 @@
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +54,7 @@ class _HomePageState extends State<HomePage> {
               return AlertDialog(
                 title: Text('Success'),
                 backgroundColor: Color(0xFFffbe00),
-                content: Text('Your token balance has been increased by 10.'),
+                content: Text('Your SaFi balance has been increased by 10.'),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
@@ -126,6 +128,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Widget _buildCurvedImage(String imagePath) {
+      return ClipRRect(
+        borderRadius:
+            BorderRadius.circular(15.0), // Adjust border radius as needed
+        child: Image.asset(
+          imagePath,
+          fit: BoxFit.cover,
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: Color(0xFFffbe00),
       appBar: AppBar(
@@ -142,7 +155,28 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Stack(
         children: [
-          Container(),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: CarouselSlider(
+              items: [
+                // Replace placeholders with curved images
+                _buildCurvedImage('assets/b1.jpg'),
+                _buildCurvedImage('assets/b2.jpg'),
+                _buildCurvedImage('assets/b3.jpg'),
+              ],
+              options: CarouselOptions(
+                height: 150.0,
+                autoPlay: true,
+                enlargeCenterPage: true,
+                aspectRatio: 16 / 9,
+                autoPlayCurve: Curves.easeInBack,
+                enableInfiniteScroll: true,
+                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                viewportFraction: 0.8,
+                scrollPhysics: ScrollPhysics(),
+              ),
+            ),
+          ),
           SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

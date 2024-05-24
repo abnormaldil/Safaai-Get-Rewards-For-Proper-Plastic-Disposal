@@ -48,6 +48,7 @@ dependencies:
   http: ^1.2.1
   email_otp: ^2.1.2
   font_awesome_flutter: ^10.7.0
+  carousel_slider: ^4.2.1
   
 
 dev_dependencies:
