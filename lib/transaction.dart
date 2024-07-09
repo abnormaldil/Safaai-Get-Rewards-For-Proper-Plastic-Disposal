@@ -42,7 +42,7 @@ class _TransactionPageState extends State<TransactionPage> {
           title: Text(
             'Transactions',
             style: TextStyle(
-              fontSize: 50,
+              fontSize: 36,
               color: Color.fromARGB(255, 255, 255, 255),
               fontFamily: 'Gilroy',
             ),

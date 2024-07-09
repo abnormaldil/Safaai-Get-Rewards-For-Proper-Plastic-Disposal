@@ -55,7 +55,7 @@ class RedeemPage extends StatelessWidget {
           title: Text(
             'Redeem',
             style: TextStyle(
-              fontSize: 50,
+              fontSize: 36,
               color: Color.fromARGB(255, 255, 255, 255),
               fontFamily: 'Gilroy',
             ),

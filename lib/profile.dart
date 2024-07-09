@@ -39,99 +39,93 @@ class ProfilePage extends StatelessWidget {
               appBar: AppBar(
                 centerTitle: true,
                 backgroundColor: Colors.transparent,
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.info_outline,
-                        color: Color(0xFFffbe00),
-                      ),
-                      onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                color: Color(
-                                    0xFF1e1f21), // Set background color to dark
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
+                title: Text(
+                  'Profile',
+                  style: TextStyle(
+                    fontSize: 36,
+                    color: Colors.white,
+                    fontFamily: 'Gilroy',
+                  ),
+                ),
+                leading: IconButton(
+                  icon: Icon(
+                    Icons.info_outline,
+                    color: Color(0xFFffbe00),
+                  ),
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: Color(
+                                0xFF1e1f21), // Set background color to dark
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Center(
+                                  child: Text(
+                                    'Project Safaai',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Center(
-                                      child: Text(
-                                        'Project Safaai',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      'Project Members:',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(height: 5),
-                                    Center(
-                                      child: Text(
-                                        'Aiswarya M K\nDilshith T S\nNakul P\nKarthika Raju',
-                                        style: TextStyle(
-                                          color: Color(0xFFffbe00),
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      'Guide:',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(height: 5),
-                                    Center(
-                                      child: Text(
-                                        'Prof. Aswathy B',
-                                        style: TextStyle(
-                                          color: Color(0xFFffbe00),
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                SizedBox(height: 10),
+                                Text(
+                                  'Project Members:',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
+                                SizedBox(height: 5),
+                                Center(
+                                  child: Text(
+                                    'Aiswarya M K\nDilshith T S\nNakul P\nKarthika Raju',
+                                    style: TextStyle(
+                                      color: Color(0xFFffbe00),
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  'Guide:',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Center(
+                                  child: Text(
+                                    'Prof. Aswathy B',
+                                    style: TextStyle(
+                                      color: Color(0xFFffbe00),
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         );
                       },
-                    ),
-                    Text(
-                      'Profile',
-                      style: TextStyle(
-                        fontSize: 50,
-                        color: Colors.white,
-                        fontFamily: 'Gilroy',
-                      ),
-                    ),
-                    SizedBox(width: 40),
-                  ],
+                    );
+                  },
                 ),
               ),
               body: Center(
