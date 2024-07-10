@@ -182,15 +182,17 @@ class RedeemPage extends StatelessWidget {
     );
   }
 
-  void _redeemCredits(
-      BuildContext context, int creditBalance, Map<String, dynamic> userData) {
-    if (creditBalance % 100 == 0 && creditBalance >= 100) {
-      int redeemedCredit = creditBalance;
-      int newCreditBalance = creditBalance - redeemedCredit;
+  Future<void> _redeemCredits(BuildContext context, int creditBalance,
+      Map<String, dynamic> userData) async {
+    int n = creditBalance % 100;
+    int newn = creditBalance - n;
+    if (creditBalance >= 100) {
+      int redeemedCredit = newn;
+      int newCreditBalance = n;
 
       FirebaseFirestore.instance
           .collection('users')
-          .doc(user!.email) // Use email instead of UID
+          .doc(user!.email)
           .update({'CreditBalance': newCreditBalance});
 
       userData['CreditBalance'] = newCreditBalance;
@@ -202,8 +204,8 @@ class RedeemPage extends StatelessWidget {
 
       FirebaseFirestore.instance
           .collection('transactions')
-          .doc(user!.email) // Use email instead of UID
-          .collection(user!.email!) // Use email instead of UID
+          .doc(user!.email)
+          .collection(user!.email!)
           .add({
         'RedeemAmount': redeemedCredit,
         'Time': transactionTime,
@@ -230,7 +232,6 @@ class RedeemPage extends StatelessWidget {
           },
         );
       }).catchError((error) {
-        // Handle errors during transaction record saving
         print("Error saving transaction: $error");
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -240,13 +241,23 @@ class RedeemPage extends StatelessWidget {
       });
     } else {
       var assetSource = AssetSource('error.mp3');
-      _player.play(assetSource);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content:
-              Text('Insufficient balance or invalid amount for redemption.'),
-        ),
+      await _player.play(assetSource);
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Color(0xFFffbe00),
+            title: Text('Invalid Redemption'),
+            content:
+                Text('Insufficient balance or invalid amount for redemption.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
       );
     }
   }

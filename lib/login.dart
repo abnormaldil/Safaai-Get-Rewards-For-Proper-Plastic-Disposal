@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:safaai/bottomnav.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,18 +14,14 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailcontroller = new TextEditingController();
   TextEditingController passwordcontroller = new TextEditingController();
   final _formkey = GlobalKey<FormState>();
-
+  AudioPlayer _player = AudioPlayer();
   userLogin() async {
     try {
       // ignore: unused_local_variable
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: Color.fromARGB(255, 29, 28, 28),
-          content: Text(
-            "Let's Clean Earth!",
-            style: TextStyle(fontSize: 20.0),
-          )));
+      var assetSource = AssetSource('welcome.mp3');
+      await _player.play(assetSource);
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => BottomNav()));
     } on FirebaseAuthException catch (e) {

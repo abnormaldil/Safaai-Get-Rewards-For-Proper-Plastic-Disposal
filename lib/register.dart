@@ -179,16 +179,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              // Image.asset(
-                              //   'assets/adduser.png',
-                              //   width: 100,
-                              //   height: 100,
-                              // ),
+                             
                               RotatedBox(
                                 quarterTurns:
                                     3, // Rotate 90 degrees counterclockwise
                                 child: Text(
-                                  "May I Know\nYou?",
+                                  "Register",
                                   textAlign: TextAlign.justify,
                                   style: TextStyle(
                                     decoration: TextDecoration.none,

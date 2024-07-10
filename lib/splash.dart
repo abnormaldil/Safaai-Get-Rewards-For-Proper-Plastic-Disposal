@@ -23,7 +23,7 @@ class _SplashState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color(0xFFffbe00),
+        color: Color(0xFF1e1f21),
         //Color(0xFF3EB16F),
         child: Center(
           child: Column(

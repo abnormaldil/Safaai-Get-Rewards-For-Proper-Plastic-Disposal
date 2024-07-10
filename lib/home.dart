@@ -61,7 +61,10 @@ class _HomePageState extends State<HomePage> {
                 content: Text('Your SaFi balance has been increased by 10.'),
                 actions: [
                   TextButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      codeController.clear();
+                    },
                     child: Text('OK'),
                   ),
                 ],
@@ -126,7 +129,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  @override
   void initState() {
     super.initState();
     _getBalance();
@@ -136,8 +138,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Widget _buildCurvedImage(String imagePath) {
       return ClipRRect(
-        borderRadius:
-            BorderRadius.circular(15.0), // Adjust border radius as needed
+        borderRadius: BorderRadius.circular(15.0),
         child: Image.asset(
           imagePath,
           fit: BoxFit.cover,
@@ -161,27 +162,114 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: CarouselSlider(
-              items: [
-                _buildCurvedImage('assets/b1.jpg'),
-                _buildCurvedImage('assets/b2.jpg'),
-                _buildCurvedImage('assets/b3.jpg'),
-              ],
-              options: CarouselOptions(
-                height: 150.0,
-                autoPlay: true,
-                enlargeCenterPage: true,
-                aspectRatio: 16 / 9,
-                autoPlayCurve: Curves.easeInBack,
-                enableInfiniteScroll: true,
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                viewportFraction: 0.8,
-                scrollPhysics: ScrollPhysics(),
+          Column(
+            children: [
+              SizedBox(height: 40),
+              Padding(
+                padding: const EdgeInsets.all(0),
+                child: CarouselSlider(
+                  items: [
+                    _buildCurvedImage('assets/b1.jpg'),
+                    _buildCurvedImage('assets/b2.jpg'),
+                    _buildCurvedImage('assets/b3.jpg'),
+                  ],
+                  options: CarouselOptions(
+                    height: 190.0,
+                    autoPlay: true,
+                    enlargeCenterPage: true,
+                    aspectRatio: 16 / 9,
+                    autoPlayCurve: Curves.easeInBack,
+                    enableInfiniteScroll: true,
+                    autoPlayAnimationDuration: Duration(milliseconds: 400),
+                    viewportFraction: 0.65,
+                    scrollPhysics: ScrollPhysics(),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
+          Positioned(
+              top: 280,
+              left: 10,
+              right: 10,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Color(0xFF1e1f21), // Background color of the box
+                  borderRadius: BorderRadius.circular(20), // Curved borders
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12, // Shadow color
+                      blurRadius: 8, // Shadow blur radius
+                      offset: Offset(0, 2), // Shadow offset
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.all(26), // Padding inside the box
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Text(
+                        'Clean & Earn:',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: 'Gilroy',
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFffbe00),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                        height:
+                            10), // Optional spacing between the title and the rest of the text
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '• Place plastic bottle in the SaFi bin.',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Gilroy',
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          ),
+                        ),
+                        Text(
+                          "• A unique code will appear on screen.",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Gilroy',
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          ),
+                        ),
+                        Text(
+                          "• Enter the unique code",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Gilroy',
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          ),
+                        ),
+                        Text(
+                          "• Claim your SaFi tokens",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Gilroy',
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          ),
+                        ),
+                        Text(
+                          "• Redeem the tokens for rewards",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Gilroy',
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )),
           SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -196,8 +284,8 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           color: const Color(0xFF1e1f21),
                           borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(60),
-                            topRight: Radius.circular(60),
+                            topLeft: Radius.circular(50),
+                            topRight: Radius.circular(50),
                           ),
                         ),
                         child: Padding(
@@ -265,19 +353,13 @@ class _HomePageState extends State<HomePage> {
                               SizedBox(height: 20),
                               TextFormField(
                                 controller: codeController,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
+                                style: TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
                                   labelText: 'Enter Unique Code',
-                                  labelStyle: TextStyle(
-                                    color: Colors.white,
-                                  ),
+                                  labelStyle: TextStyle(color: Colors.white),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(30.0),
-                                    borderSide: BorderSide(
-                                      color: Colors.white,
-                                    ),
+                                    borderSide: BorderSide(color: Colors.white),
                                   ),
                                 ),
                               ),
@@ -289,9 +371,7 @@ class _HomePageState extends State<HomePage> {
                                 child: Container(
                                   width: MediaQuery.of(context).size.width,
                                   padding: EdgeInsets.symmetric(
-                                    vertical: 13.0,
-                                    horizontal: 13.0,
-                                  ),
+                                      vertical: 13.0, horizontal: 13.0),
                                   decoration: BoxDecoration(
                                     color: Color(0xFFffbe00),
                                     borderRadius: BorderRadius.circular(30),
