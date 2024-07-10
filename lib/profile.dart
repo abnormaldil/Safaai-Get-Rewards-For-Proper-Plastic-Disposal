@@ -93,7 +93,7 @@ class ProfilePage extends StatelessWidget {
                                 SizedBox(height: 5),
                                 Center(
                                   child: Text(
-                                    'Aiswarya M K\nDilshith T S\nNakul P\nKarthika Raju',
+                                    'Aiswarya M K\nDilshith T S\nKarthika Raju\nNakul P',
                                     style: TextStyle(
                                       color: Color(0xFFffbe00),
                                       fontSize: 14,
