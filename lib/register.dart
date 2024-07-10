@@ -179,7 +179,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                             
                               RotatedBox(
                                 quarterTurns:
                                     3, // Rotate 90 degrees counterclockwise
@@ -194,6 +193,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                     color: Colors.white,
                                   ),
                                 ),
+                              ),
+                              Image.asset(
+                                'assets/adduser.png',
+                                width: 200,
+                                height: 200,
                               ),
                             ],
                           ),
