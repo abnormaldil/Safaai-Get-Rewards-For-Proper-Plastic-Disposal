@@ -135,392 +135,540 @@ class ProfilePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Container(
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFffbe00),
-                          borderRadius: BorderRadius.circular(50),
-                          boxShadow: [
-                            BoxShadow(
-                              color:
-                                  Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ListTile(
-                              leading: Icon(
-                                Icons.person,
-                                color: Color.fromARGB(255, 29, 28, 28),
-                                size: 30.0,
+                      SingleChildScrollView(
+                        child: Container(
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Color(0xFFffbe00),
+                            borderRadius: BorderRadius.circular(50),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromARGB(255, 0, 0, 0)
+                                    .withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 3),
                               ),
-                              title: Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      name,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Color(0xFF1e1f21),
-                                        fontFamily: 'Gilroy-SemiBold',
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ListTile(
+                                leading: Icon(
+                                  Icons.person,
+                                  color: Color.fromARGB(255, 29, 28, 28),
+                                  size: 30.0,
+                                ),
+                                title: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        name,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Color(0xFF1e1f21),
+                                          fontFamily: 'Gilroy-SemiBold',
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.edit),
-                                    onPressed: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          String newValue = '';
-                                          return AlertDialog(
-                                            backgroundColor: Color(0xFFffbe00),
-                                            content: TextField(
-                                              onChanged: (value) {
-                                                newValue = value;
-                                              },
-                                              decoration: InputDecoration(
-                                                hintText: 'Enter new Name',
+                                    IconButton(
+                                      icon: Icon(Icons.edit),
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            String newValue = '';
+                                            return AlertDialog(
+                                              backgroundColor:
+                                                  Color(0xFFffbe00),
+                                              content: SingleChildScrollView(
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    TextField(
+                                                      onChanged: (value) {
+                                                        newValue = value;
+                                                      },
+                                                      decoration:
+                                                          InputDecoration(
+                                                              fillColor: Color
+                                                                  .fromARGB(
+                                                                      0,
+                                                                      255,
+                                                                      255,
+                                                                      255),
+                                                              filled: true,
+                                                              hintText:
+                                                                  "Enter New Name",
+                                                              hintStyle: TextStyle(
+                                                                  fontSize:
+                                                                      15.0,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          29,
+                                                                          28,
+                                                                          28)),
+                                                              border:
+                                                                  OutlineInputBorder(
+                                                                borderSide: BorderSide(
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            254,
+                                                                            215,
+                                                                            20),
+                                                                    width: 5.0),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            30),
+                                                              )),
+                                                    ),
+                                                    SizedBox(height: 20),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            actions: [
-                                              GestureDetector(
-                                                onTap: () async {
-                                                  if (newValue.trim().isEmpty) {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                            'Please enter a valid name'),
-                                                      ),
-                                                    );
-                                                  } else {
-                                                    final userDocRef =
-                                                        FirebaseFirestore
-                                                            .instance
-                                                            .collection('users')
-                                                            .doc(user!.email);
-                                                    try {
-                                                      await userDocRef.update({
-                                                        'Name': newValue.trim()
-                                                      });
-                                                      Navigator.pop(context);
-                                                    } catch (error) {
-                                                      print(
-                                                          'Error updating Name: $error');
+                                              actions: [
+                                                GestureDetector(
+                                                  onTap: () async {
+                                                    if (newValue
+                                                        .trim()
+                                                        .isEmpty) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                              'Please enter a valid name'),
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      final userDocRef =
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'users')
+                                                              .doc(user!.email);
+                                                      try {
+                                                        await userDocRef
+                                                            .update({
+                                                          'Name':
+                                                              newValue.trim()
+                                                        });
+                                                        Navigator.pop(context);
+                                                      } catch (error) {
+                                                        print(
+                                                            'Error updating Name: $error');
+                                                      }
                                                     }
-                                                  }
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 13.0,
-                                                      horizontal: 10.0),
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFF1e1f21),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
-                                                  ),
-                                                  child: Text(
-                                                    'Submit',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
+                                                  },
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 10.0,
+                                                            horizontal: 10.0),
+                                                    decoration: BoxDecoration(
+                                                      color: Color(0xFF1e1f21),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30),
+                                                    ),
+                                                    child: Text(
+                                                      'Submit',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 13.0,
-                                                      horizontal: 10.0),
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.red,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
-                                                  ),
-                                                  child: Text(
-                                                    'Cancel',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 13.0,
+                                                            horizontal: 10.0),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.red,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30),
+                                                    ),
+                                                    child: Text(
+                                                      'Cancel',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                            ListTile(
-                              leading: Icon(
-                                Icons.email,
-                                color: Color.fromARGB(255, 29, 28, 28),
-                                size: 30.0,
-                              ),
-                              title: Text(
-                                email,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Color(0xFF1e1f21),
-                                  fontFamily: 'Gilroy-SemiBold',
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ),
-                            ListTile(
-                              leading: Icon(
-                                Icons.phone,
-                                color: Color.fromARGB(255, 29, 28, 28),
-                                size: 30.0,
+                              ListTile(
+                                leading: Icon(
+                                  Icons.email,
+                                  color: Color.fromARGB(255, 29, 28, 28),
+                                  size: 30.0,
+                                ),
+                                title: Text(
+                                  email,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color(0xFF1e1f21),
+                                    fontFamily: 'Gilroy-SemiBold',
+                                  ),
+                                ),
                               ),
-                              title: Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      phone.toString(),
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Color(0xFF1e1f21),
-                                        fontFamily: 'Gilroy-SemiBold',
+                              ListTile(
+                                leading: Icon(
+                                  Icons.phone,
+                                  color: Color.fromARGB(255, 29, 28, 28),
+                                  size: 30.0,
+                                ),
+                                title: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        phone.toString(),
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Color(0xFF1e1f21),
+                                          fontFamily: 'Gilroy-SemiBold',
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.edit),
-                                    onPressed: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          String newValue = '';
-                                          return AlertDialog(
-                                            backgroundColor: Color(0xFFffbe00),
-                                            content: TextField(
-                                              onChanged: (value) {
-                                                newValue = value;
-                                              },
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              inputFormatters: [
-                                                FilteringTextInputFormatter
-                                                    .digitsOnly,
-                                                LengthLimitingTextInputFormatter(
-                                                    10),
+                                    IconButton(
+                                      icon: Icon(Icons.edit),
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            String newValue = '';
+                                            return AlertDialog(
+                                              backgroundColor:
+                                                  Color(0xFFffbe00),
+                                              content: SingleChildScrollView(
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    TextField(
+                                                      onChanged: (value) {
+                                                        newValue = value;
+                                                      },
+                                                      keyboardType:
+                                                          TextInputType.number,
+                                                      inputFormatters: [
+                                                        FilteringTextInputFormatter
+                                                            .digitsOnly,
+                                                        LengthLimitingTextInputFormatter(
+                                                            10),
+                                                      ],
+                                                      decoration:
+                                                          InputDecoration(
+                                                              fillColor: Color
+                                                                  .fromARGB(
+                                                                      0,
+                                                                      255,
+                                                                      255,
+                                                                      255),
+                                                              filled: true,
+                                                              hintText:
+                                                                  "Enter New Phone Number",
+                                                              hintStyle: TextStyle(
+                                                                  fontSize:
+                                                                      15.0,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          29,
+                                                                          28,
+                                                                          28)),
+                                                              border:
+                                                                  OutlineInputBorder(
+                                                                borderSide: BorderSide(
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            254,
+                                                                            215,
+                                                                            20),
+                                                                    width: 5.0),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            30),
+                                                              )),
+                                                    ),
+                                                    SizedBox(height: 20),
+                                                  ],
+                                                ),
+                                              ),
+                                              actions: [
+                                                GestureDetector(
+                                                  onTap: () async {
+                                                    if (newValue
+                                                            .trim()
+                                                            .isEmpty ||
+                                                        !RegExp(r'^[0-9]{10}$')
+                                                            .hasMatch(
+                                                                newValue)) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                              'Please enter a valid 10-digit phone number'),
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      final userDocRef =
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'users')
+                                                              .doc(user!.email);
+                                                      try {
+                                                        await userDocRef
+                                                            .update({
+                                                          'PhoneNumber':
+                                                              int.parse(newValue
+                                                                  .trim())
+                                                        });
+                                                        Navigator.pop(context);
+                                                      } catch (error) {
+                                                        print(
+                                                            'Error updating Phone Number: $error');
+                                                      }
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 13.0,
+                                                            horizontal: 10.0),
+                                                    decoration: BoxDecoration(
+                                                      color: Color(0xFF1e1f21),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30),
+                                                    ),
+                                                    child: Text(
+                                                      'Submit',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 13.0,
+                                                            horizontal: 10.0),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.red,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30),
+                                                    ),
+                                                    child: Text(
+                                                      'Cancel',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                               ],
-                                              decoration: InputDecoration(
-                                                hintText:
-                                                    'Enter new Phone Number',
-                                              ),
-                                            ),
-                                            actions: [
-                                              GestureDetector(
-                                                onTap: () async {
-                                                  if (newValue.trim().isEmpty ||
-                                                      !RegExp(r'^[0-9]{10}$')
-                                                          .hasMatch(newValue)) {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                            'Please enter a valid 10-digit phone number'),
-                                                      ),
-                                                    );
-                                                  } else {
-                                                    final userDocRef =
-                                                        FirebaseFirestore
-                                                            .instance
-                                                            .collection('users')
-                                                            .doc(user!.email);
-                                                    try {
-                                                      await userDocRef.update({
-                                                        'PhoneNumber':
-                                                            int.parse(
-                                                                newValue.trim())
-                                                      });
-                                                      Navigator.pop(context);
-                                                    } catch (error) {
-                                                      print(
-                                                          'Error updating Phone Number: $error');
-                                                    }
-                                                  }
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 13.0,
-                                                      horizontal: 10.0),
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFF1e1f21),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
-                                                  ),
-                                                  child: Text(
-                                                    'Submit',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 13.0,
-                                                      horizontal: 10.0),
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.red,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
-                                                  ),
-                                                  child: Text(
-                                                    'Cancel',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            ListTile(
-                              leading: Icon(
-                                FontAwesomeIcons.piggyBank,
-                                color: Color.fromARGB(255, 29, 28, 28),
-                                size: 30.0,
-                              ),
-                              title: Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      upi,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Color(0xFF1e1f21),
-                                        fontFamily: 'Gilroy-SemiBold',
+                              ListTile(
+                                leading: Icon(
+                                  FontAwesomeIcons.piggyBank,
+                                  color: Color.fromARGB(255, 29, 28, 28),
+                                  size: 30.0,
+                                ),
+                                title: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        upi,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Color(0xFF1e1f21),
+                                          fontFamily: 'Gilroy-SemiBold',
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.edit),
-                                    onPressed: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          String newValue = '';
-                                          return AlertDialog(
-                                            backgroundColor: Color(0xFFffbe00),
-                                            content: TextField(
-                                              onChanged: (value) {
-                                                newValue = value;
-                                              },
-                                              decoration: InputDecoration(
-                                                hintText: 'Enter new UPI ID',
+                                    IconButton(
+                                      icon: Icon(Icons.edit),
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            String newValue = '';
+                                            return AlertDialog(
+                                              backgroundColor:
+                                                  Color(0xFFffbe00),
+                                              content: SingleChildScrollView(
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    TextField(
+                                                      onChanged: (value) {
+                                                        newValue = value;
+                                                      },
+                                                      decoration:
+                                                          InputDecoration(
+                                                              fillColor: Color
+                                                                  .fromARGB(
+                                                                      0,
+                                                                      255,
+                                                                      255,
+                                                                      255),
+                                                              filled: true,
+                                                              hintText:
+                                                                  "Enter New UPI Id",
+                                                              hintStyle: TextStyle(
+                                                                  fontSize:
+                                                                      15.0,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          29,
+                                                                          28,
+                                                                          28)),
+                                                              border:
+                                                                  OutlineInputBorder(
+                                                                borderSide: BorderSide(
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            254,
+                                                                            215,
+                                                                            20),
+                                                                    width: 5.0),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            50),
+                                                              )),
+                                                    ),
+                                                    SizedBox(height: 20),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            actions: [
-                                              GestureDetector(
-                                                onTap: () async {
-                                                  if (newValue.trim().isEmpty) {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                            'Please enter a valid UPI ID'),
-                                                      ),
-                                                    );
-                                                  } else {
-                                                    final userDocRef =
-                                                        FirebaseFirestore
-                                                            .instance
-                                                            .collection('users')
-                                                            .doc(user!.email);
-                                                    try {
-                                                      await userDocRef.update({
-                                                        'UpiId': newValue.trim()
-                                                      });
-                                                      Navigator.pop(context);
-                                                    } catch (error) {
-                                                      print(
-                                                          'Error updating UPI ID: $error');
+                                              actions: [
+                                                GestureDetector(
+                                                  onTap: () async {
+                                                    if (newValue
+                                                        .trim()
+                                                        .isEmpty) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                              'Please enter a valid UPI ID'),
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      final userDocRef =
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'users')
+                                                              .doc(user!.email);
+                                                      try {
+                                                        await userDocRef
+                                                            .update({
+                                                          'UpiId':
+                                                              newValue.trim()
+                                                        });
+                                                        Navigator.pop(context);
+                                                      } catch (error) {
+                                                        print(
+                                                            'Error updating UPI ID: $error');
+                                                      }
                                                     }
-                                                  }
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 13.0,
-                                                      horizontal: 10.0),
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFF1e1f21),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
-                                                  ),
-                                                  child: Text(
-                                                    'Submit',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
+                                                  },
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 13.0,
+                                                            horizontal: 10.0),
+                                                    decoration: BoxDecoration(
+                                                      color: Color(0xFF1e1f21),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30),
+                                                    ),
+                                                    child: Text(
+                                                      'Submit',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 13.0,
-                                                      horizontal: 10.0),
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.red,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
-                                                  ),
-                                                  child: Text(
-                                                    'Cancel',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 13.0,
+                                                            horizontal: 10.0),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.red,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30),
+                                                    ),
+                                                    child: Text(
+                                                      'Cancel',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(height: 40),

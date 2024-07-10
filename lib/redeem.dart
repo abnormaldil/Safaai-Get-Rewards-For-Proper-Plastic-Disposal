@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class RedeemPage extends StatelessWidget {
   final User? user = FirebaseAuth.instance.currentUser;
+  AudioPlayer _player = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +43,6 @@ class RedeemPage extends StatelessWidget {
   Widget _buildRedeemUI(
       BuildContext context, int creditBalance, Map<String, dynamic> userData) {
     return Container(
-      // decoration: BoxDecoration(
-      //   image: DecorationImage(
-      //     image: AssetImage('assets/redeem.png'),
-      //     fit: BoxFit.cover,
-      //   ),
-      // ),
       child: Scaffold(
         backgroundColor: Color(0xFF1e1f21),
         appBar: AppBar(
@@ -214,7 +210,9 @@ class RedeemPage extends StatelessWidget {
         'Date': transactionTime.toDate(),
         'UpiId': upiId,
         'Email': email,
-      }).then((_) {
+      }).then((_) async {
+        var assetSource = AssetSource('claimed.mp3');
+        await _player.play(assetSource);
         showDialog(
           context: context,
           builder: (context) {
@@ -241,7 +239,9 @@ class RedeemPage extends StatelessWidget {
         );
       });
     } else {
-      // Show error message
+      var assetSource = AssetSource('error.mp3');
+      _player.play(assetSource);
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content:

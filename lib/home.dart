@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,6 +13,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser;
+  AudioPlayer _player = AudioPlayer();
+
   String CreditBalance = '0';
   TextEditingController codeController = TextEditingController();
   Set<String> validCodes = {
@@ -47,7 +50,8 @@ class _HomePageState extends State<HomePage> {
           setState(() {
             CreditBalance = (int.parse(CreditBalance) + 10).toString();
           });
-
+          var assetSource = AssetSource('claimed.mp3');
+          await _player.play(assetSource);
           showDialog(
             context: context,
             builder: (context) {
@@ -84,6 +88,8 @@ class _HomePageState extends State<HomePage> {
         );
       }
     } else {
+      var assetSource = AssetSource('error.mp3');
+      await _player.play(assetSource);
       showDialog(
         context: context,
         builder: (context) {
@@ -159,7 +165,6 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(10.0),
             child: CarouselSlider(
               items: [
-                // Replace placeholders with curved images
                 _buildCurvedImage('assets/b1.jpg'),
                 _buildCurvedImage('assets/b2.jpg'),
                 _buildCurvedImage('assets/b3.jpg'),
@@ -240,7 +245,7 @@ class _HomePageState extends State<HomePage> {
                                       SizedBox(height: 5.0),
                                       Icon(
                                         FontAwesomeIcons.leaf,
-                                        size: 45.0, // Adjust the size as needed
+                                        size: 45.0,
                                         color: Color(0xFFffbe00),
                                       ),
                                       Text(
