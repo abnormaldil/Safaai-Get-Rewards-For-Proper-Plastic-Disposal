@@ -43,11 +43,17 @@ class RedeemPage extends StatelessWidget {
   Widget _buildRedeemUI(
       BuildContext context, int creditBalance, Map<String, dynamic> userData) {
     return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/transaction.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
       child: Scaffold(
-        backgroundColor: Color(0xFF1e1f21),
+        backgroundColor: Color.fromARGB(0, 30, 31, 33),
         appBar: AppBar(
           centerTitle: true,
-          backgroundColor: Color(0xFF1e1f21),
+          backgroundColor: Color.fromARGB(0, 30, 31, 33),
           title: Text(
             'Redeem',
             style: TextStyle(

@@ -33,7 +33,12 @@ class ProfilePage extends StatelessWidget {
           String upi = userData['UpiId'];
 
           return Container(
-            color: Color(0xFF1e1f21),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/transaction.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
             child: Scaffold(
               backgroundColor: Colors.transparent,
               appBar: AppBar(
