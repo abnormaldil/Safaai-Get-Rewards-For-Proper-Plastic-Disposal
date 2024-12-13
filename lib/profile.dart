@@ -34,10 +34,11 @@ class ProfilePage extends StatelessWidget {
 
           return Container(
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/transaction.png'),
-                fit: BoxFit.cover,
-              ),
+              color: const Color.fromARGB(255, 23, 23, 23),
+              // image: DecorationImage(
+              //   image: AssetImage('assets/transaction.png'),
+              //   fit: BoxFit.cover,
+              // ),
             ),
             child: Scaffold(
               backgroundColor: Colors.transparent,
@@ -55,7 +56,7 @@ class ProfilePage extends StatelessWidget {
                 leading: IconButton(
                   icon: Icon(
                     Icons.info_outline,
-                    color: Color(0xFFffbe00),
+                    color: Color(0xFF18cc84),
                   ),
                   onPressed: () {
                     showModalBottomSheet(
@@ -100,7 +101,7 @@ class ProfilePage extends StatelessWidget {
                                   child: Text(
                                     'Aiswarya M K\nDilshith T S\nKarthika Raju\nNakul P',
                                     style: TextStyle(
-                                      color: Color(0xFFffbe00),
+                                      color: Color(0xFF18cc84),
                                       fontSize: 14,
                                     ),
                                   ),
@@ -119,7 +120,7 @@ class ProfilePage extends StatelessWidget {
                                   child: Text(
                                     'Prof. Aswathy B',
                                     style: TextStyle(
-                                      color: Color(0xFFffbe00),
+                                      color: Color(0xFF18cc84),
                                       fontSize: 14,
                                     ),
                                   ),
@@ -144,7 +145,7 @@ class ProfilePage extends StatelessWidget {
                         child: Container(
                           padding: EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: Color(0xFFffbe00),
+                            color: Color(0xFF18cc84),
                             borderRadius: BorderRadius.circular(50),
                             boxShadow: [
                               BoxShadow(
@@ -185,8 +186,8 @@ class ProfilePage extends StatelessWidget {
                                           builder: (context) {
                                             String newValue = '';
                                             return AlertDialog(
-                                              backgroundColor:
-                                                  Color(0xFFffbe00),
+                                              backgroundColor: Color.fromARGB(
+                                                  255, 19, 212, 151),
                                               content: SingleChildScrollView(
                                                 child: Column(
                                                   mainAxisSize:
@@ -362,8 +363,8 @@ class ProfilePage extends StatelessWidget {
                                           builder: (context) {
                                             String newValue = '';
                                             return AlertDialog(
-                                              backgroundColor:
-                                                  Color(0xFFffbe00),
+                                              backgroundColor: Color.fromARGB(
+                                                  255, 19, 212, 151),
                                               content: SingleChildScrollView(
                                                 child: Column(
                                                   mainAxisSize:
@@ -536,8 +537,8 @@ class ProfilePage extends StatelessWidget {
                                           builder: (context) {
                                             String newValue = '';
                                             return AlertDialog(
-                                              backgroundColor:
-                                                  Color(0xFFffbe00),
+                                              backgroundColor: Color.fromARGB(
+                                                  255, 19, 212, 151),
                                               content: SingleChildScrollView(
                                                 child: Column(
                                                   mainAxisSize:
@@ -695,7 +696,7 @@ class ProfilePage extends StatelessWidget {
                                 horizontal: 10.0,
                               ),
                               decoration: BoxDecoration(
-                                color: Color(0xFFffbe00),
+                                color: Color(0xFF18cc84),
                                 borderRadius: BorderRadius.circular(30),
                               ),
                               child: Center(

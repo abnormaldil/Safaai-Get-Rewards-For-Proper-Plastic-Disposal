@@ -29,10 +29,8 @@ class _TransactionPageState extends State<TransactionPage> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/transaction.png'),
-          fit: BoxFit.cover,
-        ),
+        color: const Color.fromARGB(255, 23, 23, 23),
+        
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -85,7 +83,7 @@ class _TransactionPageState extends State<TransactionPage> {
         '$redeemedAmount SaFi',
         style: TextStyle(
           fontSize: 34,
-          color: Color(0xFFffbe00),
+          color: Color(0xFF18cc84),
           fontFamily: 'Gilroy',
         ),
       ),

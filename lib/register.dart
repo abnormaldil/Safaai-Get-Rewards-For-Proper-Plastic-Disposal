@@ -93,7 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                backgroundColor: Color(0xFFffbe00),
+                backgroundColor: Color(0xFF18cc84),
                 title: Text('Invalid Email'),
                 content: Text(
                     'That Email Might Be Missing a Few Pieces. Try Again!'),
@@ -113,7 +113,7 @@ class _RegisterPageState extends State<RegisterPage> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                backgroundColor: Color(0xFFffbe00),
+                backgroundColor: Color(0xFF18cc84),
                 title: Text('Weak Password'),
                 content: Text('Your Password Need More Strength'),
                 actions: [
@@ -132,7 +132,7 @@ class _RegisterPageState extends State<RegisterPage> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                backgroundColor: Color(0xFFffbe00),
+                backgroundColor: Color(0xFF18cc84),
                 title: Text('Hey I Know You!'),
                 content: Text(
                     'Account already exists for this Email. Login instead'),
@@ -388,7 +388,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 padding: EdgeInsets.symmetric(
                                     vertical: 13.0, horizontal: 13.0),
                                 decoration: BoxDecoration(
-                                    color: Color(0xFFffbe00),
+                                    color: Color(0xFF18cc84),
                                     borderRadius: BorderRadius.circular(30)),
                                 child: Center(
                                     child: Text(

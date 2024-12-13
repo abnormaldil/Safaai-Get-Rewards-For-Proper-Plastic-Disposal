@@ -26,7 +26,7 @@ class Otp extends StatelessWidget {
         decoration: InputDecoration(
           hintText: '-',
           hintStyle: TextStyle(
-              color: Color(0xFFffbe00),
+              color: Color(0xFF18cc84),
               fontFamily: "Gilroy",
               fontWeight: FontWeight.bold), // Set hint color to white
           enabledBorder: OutlineInputBorder(
@@ -37,7 +37,8 @@ class Otp extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-                color: Color(0xFFffbe00)), // Set focused border color to white
+                color: Color.fromARGB(
+                    255, 19, 212, 151)), // Set focused border color to white
             borderRadius: BorderRadius.circular(10.0),
           ),
         ),
@@ -155,7 +156,8 @@ class _OtpScreenState extends State<OtpScreen> {
                       TextSpan(
                         text: widget.userEmail,
                         style: TextStyle(
-                            color: Color(0xFFffbe00)), // Change color here
+                            color: Color.fromARGB(
+                                255, 19, 212, 151)), // Change color here
                       ),
                       TextSpan(
                         text: "\nEnter the code to get started.",
@@ -173,7 +175,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 width: MediaQuery.of(context).size.width, // Full width button
                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                 decoration: BoxDecoration(
-                  color: Color(0xFFffbe00),
+                  color: Color(0xFF18cc84),
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Center(
@@ -223,7 +225,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     'Back to SignUp',
                     style: TextStyle(
                       decoration: TextDecoration.none,
-                      color: Color(0xFFffbe00),
+                      color: Color(0xFF18cc84),
                       fontSize: 18,
                     ),
                   )),

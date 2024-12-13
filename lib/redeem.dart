@@ -44,10 +44,11 @@ class RedeemPage extends StatelessWidget {
       BuildContext context, int creditBalance, Map<String, dynamic> userData) {
     return Container(
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/transaction.png'),
-          fit: BoxFit.cover,
-        ),
+        color: const Color.fromARGB(255, 23, 23, 23),
+        // image: DecorationImage(
+        //   image: AssetImage('assets/transaction.png'),
+        //   fit: BoxFit.cover,
+        // ),
       ),
       child: Scaffold(
         backgroundColor: Color.fromARGB(0, 30, 31, 33),
@@ -80,7 +81,7 @@ class RedeemPage extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Color.fromARGB(255, 255, 162, 0).withOpacity(0.5),
+                      color: Color.fromARGB(255, 19, 212, 151).withOpacity(0.5),
                       spreadRadius: 5,
                       blurRadius: 25,
                       offset: Offset(0, 3),
@@ -105,7 +106,7 @@ class RedeemPage extends StatelessWidget {
                       Icon(
                         FontAwesomeIcons.leaf,
                         size: 45.0, // Adjust the size as needed
-                        color: Color(0xFFffbe00),
+                        color: Color(0xFF18cc84),
                       ),
                       Text(
                         creditBalance.toString(),
@@ -126,7 +127,7 @@ class RedeemPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 17,
                   fontFamily: 'Gilroy',
-                  color: Color(0xFFffbe00),
+                  color: Color(0xFF18cc84),
                 ),
               ),
               SizedBox(height: 5),
@@ -168,7 +169,7 @@ class RedeemPage extends StatelessWidget {
                   ),
                   CircleAvatar(
                     radius: 30,
-                    backgroundColor: Color(0xFFffbe00),
+                    backgroundColor: Color(0xFF18cc84),
                     child: IconButton(
                       color: const Color.fromARGB(255, 29, 28, 28),
                       onPressed: () =>
@@ -226,7 +227,7 @@ class RedeemPage extends StatelessWidget {
           builder: (context) {
             return AlertDialog(
               title: Text('Success'),
-              backgroundColor: Color(0xFFffbe00),
+              backgroundColor: Color(0xFF18cc84),
               content: Text('Redeemed $redeemedCredit Credits!'),
               actions: [
                 TextButton(
@@ -252,7 +253,7 @@ class RedeemPage extends StatelessWidget {
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: Color(0xFFffbe00),
+            backgroundColor: Color(0xFF18cc84),
             title: Text('Invalid Redemption'),
             content:
                 Text('Insufficient balance or invalid amount for redemption.'),
