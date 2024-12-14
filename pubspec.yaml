@@ -32,12 +32,12 @@ dependencies:
     
     sdk: flutter
   connectivity_plus: ^6.0.1
-  firebase_core: ^2.30.0
-  cloud_firestore: ^4.17.0
+  firebase_core: ^2.32.0
+  cloud_firestore: ^4.17.5
   random_string: ^2.3.1
   fluttertoast: ^8.2.5
   flutter_styled_toast: ^2.2.1
-  firebase_auth: ^4.19.2
+  firebase_auth: ^4.16.0
   google_sign_in: ^6.1.6
   the_apple_sign_in: ^1.1.1
   curved_navigation_bar: ^1.0.3

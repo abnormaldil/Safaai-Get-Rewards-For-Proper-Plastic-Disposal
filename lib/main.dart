@@ -12,22 +12,32 @@ import 'package:safaai/transaction.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: SplashScreen(),
-    routes: {
-      '/register': (context) => RegisterPage(),
-      '/login': (context) => LoginPage(),
-      '/home': (context) => HomePage(),
-      '/forgotpass': (context) => ForgotPasswordPage(),
-      '/transaction': (context) => TransactionPage(),
-      '/profile': (context) => ProfilePage(),
-      '/redeem': (context) => RedeemPage(),
-      '/mainpage': (context) => MainPage(),
-    },
-  ));
+
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {
+    print('Firebase initialization error: $e');
+  }
+
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
-    return const MaterialApp(debugShowCheckedModeBanner: false);
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(),
+      routes: {
+        '/register': (context) => RegisterPage(),
+        '/login': (context) => LoginPage(),
+        '/home': (context) => HomePage(),
+        '/forgotpass': (context) => ForgotPasswordPage(),
+        '/transaction': (context) => TransactionPage(),
+        '/profile': (context) => ProfilePage(),
+        '/redeem': (context) => RedeemPage(),
+        '/mainpage': (context) => MainPage(),
+      },
+    );
   }
 }

@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  BitmapDescriptor customIcon = BitmapDescriptor.defaultMarker;
   final user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -20,19 +21,45 @@ class _HomePageState extends State<HomePage> {
   LatLng _initialPosition = LatLng(9.57906989243186, 76.62288789505747);
   bool _isPermissionGranted = false;
   final TextEditingController _searchController = TextEditingController();
-  List<String> _placeSuggestions = []; // To store place suggestions
-  bool _isDropdownVisible = false; // To control dropdown visibility
+  List<String> _placeSuggestions = [];
+  bool _isDropdownVisible = false;
   Timer? _debounce;
+
+  // Marker details map
+  final Map<String, Map<String, String>> _markerDetails = {
+    "SaFi-1": {
+      "title": "SaFi Bin 1",
+      "location": "RIT Campus Kottayam",
+      "description": "Smart bin for waste disposal with rewards."
+    },
+    "SaFi-2": {
+      "title": "SaFi Bin 2",
+      "location": "City Center",
+      "description": "Located near the mall entrance."
+    },
+  };
+
+  String? _selectedMarkerId; // To track the selected marker
 
   @override
   void initState() {
+    customMarker();
     super.initState();
     _getUserLocation();
   }
 
+  void customMarker() {
+    BitmapDescriptor.fromAssetImage(
+            ImageConfiguration(size: Size(20, 20)), "marker.png")
+        .then((icon) {
+      setState(() {
+        customIcon = icon;
+      });
+    });
+  }
+
   @override
   void dispose() {
-    // Dispose the debounce timer and search controller
     _debounce?.cancel();
     _searchController.dispose();
     super.dispose();
@@ -61,7 +88,6 @@ class _HomePageState extends State<HomePage> {
       return;
     }
 
-    // Permission granted
     Position position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
@@ -70,7 +96,6 @@ class _HomePageState extends State<HomePage> {
       _isPermissionGranted = true;
     });
 
-    // Recenter map to user's current location
     if (mapController != null) {
       mapController.animateCamera(
         CameraUpdate.newLatLngZoom(_initialPosition, 14),
@@ -142,36 +167,21 @@ class _HomePageState extends State<HomePage> {
     return completer.future;
   }
 
-  void _showPermissionError() {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: Text("Permission Required"),
-        content: Text(
-            "Location permission is required to access your current location."),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text("OK"),
-          ),
-        ],
-      ),
-    );
+  void _onMarkerTapped(String markerId) {
+    setState(() {
+      _selectedMarkerId = markerId;
+    });
   }
 
   void _showLocationServiceError() {
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
+      builder: (context) => AlertDialog(
         title: Text("Location Services Disabled"),
-        content: Text("Please enable location services."),
+        content: Text("Please enable location services to use this feature."),
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
+            onPressed: () => Navigator.of(context).pop(),
             child: Text("OK"),
           ),
         ],
@@ -179,30 +189,21 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _showNoLocationFoundError() {
+  void _showPermissionError() {
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: Text("No Location Found"),
-        content:
-            Text("The entered location could not be found. Please try again."),
+      builder: (context) => AlertDialog(
+        title: Text("Permission Denied"),
+        content: Text(
+            "Location permission is required to access your current location."),
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
+            onPressed: () => Navigator.of(context).pop(),
             child: Text("OK"),
           ),
         ],
       ),
     );
-  }
-
-  void _onPlacePicked(LatLng pickedLocation) {
-    setState(() {
-      _initialPosition = pickedLocation;
-    });
-    mapController.animateCamera(CameraUpdate.newLatLngZoom(pickedLocation, 14));
   }
 
   @override
@@ -230,10 +231,27 @@ class _HomePageState extends State<HomePage> {
                 target: _initialPosition,
                 zoom: 14.0,
               ),
+              markers: _markerDetails.entries.map((entry) {
+                final markerId = entry.key;
+                final markerDetails = entry.value;
+
+                return Marker(
+                  markerId: MarkerId(markerId),
+                  position: LatLng(
+                      _initialPosition.latitude + 0.01,
+                      _initialPosition
+                          .longitude), // Replace with actual positions
+                  onTap: () => _onMarkerTapped(markerId),
+                  infoWindow: InfoWindow(
+                    title: markerDetails["title"],
+                    snippet: markerDetails["location"],
+                  ),
+                  icon: customIcon,
+                );
+              }).toSet(),
               zoomControlsEnabled: false,
               myLocationButtonEnabled: false,
               myLocationEnabled: _isPermissionGranted,
-              // myLocationButtonEnabled: _isPermissionGranted,
               mapType: MapType.normal,
             ),
           ),
@@ -246,198 +264,127 @@ class _HomePageState extends State<HomePage> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
-                border:
-                    Border.all(color: const Color.fromARGB(255, 185, 182, 182)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 5,
-                  ),
-                ],
+                border: Border.all(
+                    color: const Color.fromARGB(255, 185, 182, 182), width: 1),
               ),
               child: Row(
                 children: [
                   Expanded(
                     child: TextField(
                       controller: _searchController,
-                      onChanged: (value) async {
-                        await _searchLocation(value.trim());
-                      },
                       decoration: InputDecoration(
-                        hintText: 'Search for a building, street name, or area',
-                        hintStyle:
-                            TextStyle(fontSize: 14, fontFamily: 'Gilroy'),
+                        hintText: "Search location",
                         border: InputBorder.none,
+                        icon: Icon(Icons.search, color: Color(0xFF18cc84)),
                       ),
+                      onChanged: (query) {
+                        _searchLocation(query);
+                      },
                     ),
                   ),
                   IconButton(
-                    icon: Icon(Icons.search_rounded),
-                    onPressed: () async {
-                      bool found =
-                          await _searchLocation(_searchController.text.trim());
-                      if (!found) {
-                        _showNoLocationFoundError();
-                      }
-                    },
+                    icon: Icon(Icons.my_location, color: Color(0xFF18cc84)),
+                    onPressed: _getUserLocation,
                   ),
                 ],
               ),
             ),
           ),
-          // Dropdown for place suggestions
           if (_isDropdownVisible)
             Positioned(
-              top: 70,
+              top: 65,
               left: 15,
               right: 15,
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius:
-                      BorderRadius.circular(12), // Set the desired roundness
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
                 ),
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: _placeSuggestions.length,
                   itemBuilder: (context, index) {
-                    // Check if the current item is not the last one
-                    bool isLastItem = index == _placeSuggestions.length - 1;
-
-                    return Column(
-                      children: [
-                        ListTile(
-                          title: Text(_placeSuggestions[index]),
-                          onTap: () async {
-                            // When user selects a suggestion, fetch its coordinates
-                            String selectedPlace = _placeSuggestions[index];
-                            List<Location> selectedLocation =
-                                await locationFromAddress(selectedPlace);
-
-                            if (selectedLocation.isNotEmpty) {
-                              final pickedLocation = LatLng(
-                                  selectedLocation.first.latitude,
-                                  selectedLocation.first.longitude);
-                              _onPlacePicked(pickedLocation);
-                              setState(() {
-                                _isDropdownVisible = false;
-                              });
-                            }
-                          },
-                        ),
-                        if (!isLastItem)
-                          Divider(
-                            thickness: 1,
-                            color: Colors.grey,
-                            indent: 15,
-                            endIndent: 15,
-                          ),
-                      ],
+                    return ListTile(
+                      title: Text(_placeSuggestions[index]),
+                      onTap: () async {
+                        try {
+                          List<Location> locations = await locationFromAddress(
+                              _placeSuggestions[index]);
+                          if (locations.isNotEmpty) {
+                            Location location = locations.first;
+                            mapController.animateCamera(
+                              CameraUpdate.newLatLngZoom(
+                                LatLng(location.latitude, location.longitude),
+                                14,
+                              ),
+                            );
+                            setState(() {
+                              _isDropdownVisible = false;
+                              _searchController.clear();
+                            });
+                          }
+                        } catch (e) {
+                          print("Error navigating to location: $e");
+                        }
+                      },
                     );
                   },
                 ),
               ),
             ),
-
-          Positioned(
-            bottom: 100,
-            left: 120,
-            right: 120,
-            child: ElevatedButton(
-              onPressed: _getUserLocation,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 255, 249, 249),
+          if (_selectedMarkerId != null)
+            Positioned(
+              bottom: 100,
+              left: 20,
+              right: 20,
+              child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.adjust_rounded,
-                    color: const Color(0xFF18cc84),
-                    size: 22.0,
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    'Use Current Location',
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w900,
-                      fontFamily: 'Gilroy',
-                      color: const Color(0xFF18cc84),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          Positioned(
-            top: 300,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: DraggableScrollableSheet(
-              initialChildSize: 0.2,
-              minChildSize: 0.2,
-              maxChildSize: 1.0,
-              builder:
-                  (BuildContext context, ScrollController scrollController) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF1e1f21),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40),
-                      topRight: Radius.circular(40),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: ListView(
-                      controller: scrollController,
-                      children: [
-                        SizedBox(height: 30),
-                        Container(
-                          alignment: Alignment.center,
-                          width: 200,
-                          height: 200,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color.fromARGB(255, 19, 212, 151)
-                                    .withOpacity(0.5),
-                                spreadRadius: 5,
-                                blurRadius: 25,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                Color.fromARGB(255, 74, 74, 79),
-                                Color.fromARGB(255, 19, 18, 18),
-                                Color.fromARGB(255, 39, 39, 40),
-                              ],
-                            ),
-                          ),
-                          child: Icon(
-                            Icons.delete_outline,
-                            size: 100.0,
-                            color: Colors.white,
-                          ),
+                elevation: 5,
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        _markerDetails[_selectedMarkerId]!["title"]!,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
                         ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(_markerDetails[_selectedMarkerId]!["description"]!),
+                      SizedBox(height: 10),
+                      Text(
+                        "Location: ${_markerDetails[_selectedMarkerId]!["location"]!}",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _selectedMarkerId = null;
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFF18cc84),
+                        ),
+                        child: Text("Close"),
+                      ),
+                    ],
                   ),
-                );
-              },
+                ),
+              ),
             ),
-          ),
         ],
       ),
     );
