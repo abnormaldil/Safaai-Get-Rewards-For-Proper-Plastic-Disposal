@@ -26,7 +26,7 @@ class Otp extends StatelessWidget {
         decoration: InputDecoration(
           hintText: '-',
           hintStyle: TextStyle(
-              color: Color(0xFF18cc84),
+              color: Color.fromARGB(255, 42, 254, 169),
               fontFamily: "Gilroy",
               fontWeight: FontWeight.bold), // Set hint color to white
           enabledBorder: OutlineInputBorder(
@@ -175,7 +175,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 width: MediaQuery.of(context).size.width, // Full width button
                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                 decoration: BoxDecoration(
-                  color: Color(0xFF18cc84),
+                  color: Color.fromARGB(255, 42, 254, 169),
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Center(
@@ -225,7 +225,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     'Back to SignUp',
                     style: TextStyle(
                       decoration: TextDecoration.none,
-                      color: Color(0xFF18cc84),
+                      color: Color.fromARGB(255, 42, 254, 169),
                       fontSize: 18,
                     ),
                   )),

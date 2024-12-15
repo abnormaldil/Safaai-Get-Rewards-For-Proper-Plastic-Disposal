@@ -55,6 +55,7 @@ dependencies:
   geocoding: ^3.0.0
   place_picker_google: 0.0.6
   location: 7.0.0
+  dio: ^5.7.0
   
 
 dev_dependencies:
@@ -115,6 +116,9 @@ flutter:
     - family: AvantGardeLT
       fonts:
         - asset: assets/AvantGardeLT-Bold.otf
+    - family: Hearth
+      fonts:
+        - asset: assets/Hearth-Stone.ttf
 
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

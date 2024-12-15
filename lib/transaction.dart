@@ -29,8 +29,7 @@ class _TransactionPageState extends State<TransactionPage> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 23, 23, 23),
-        
+        color: const Color.fromARGB(255, 255, 255, 255),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -41,7 +40,7 @@ class _TransactionPageState extends State<TransactionPage> {
             'Transactions',
             style: TextStyle(
               fontSize: 36,
-              color: Color.fromARGB(255, 255, 255, 255),
+              color: const Color.fromARGB(255, 41, 41, 41),
               fontFamily: 'Gilroy',
             ),
           ),
@@ -77,31 +76,87 @@ class _TransactionPageState extends State<TransactionPage> {
       BuildContext context, DocumentSnapshot transaction) {
     Timestamp transactionTime = transaction['Time'];
     int redeemedAmount = transaction['RedeemAmount'];
+    DateTime dateTime = transactionTime.toDate();
+    String formattedDate = "${dateTime.day}/${dateTime.month}/${dateTime.year}";
+    String formattedTime =
+        "${dateTime.hour}:${dateTime.minute.toString().padLeft(2, '0')}";
 
-    return ListTile(
-      title: Text(
-        '$redeemedAmount SaFi',
-        style: TextStyle(
-          fontSize: 34,
-          color: Color(0xFF18cc84),
-          fontFamily: 'Gilroy',
-        ),
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 25, vertical: 7),
+      padding: EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Color.fromARGB(0, 34, 34, 34),
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(color: Colors.grey, width: 1),
       ),
-      subtitle: Text(
-        'Date: ${transactionTime.toDate().toString()}',
-        style: TextStyle(
-          fontSize: 15,
-          color: Color.fromARGB(255, 255, 255, 255),
-          fontFamily: 'Gilroy',
-        ),
-      ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min, // Restrict trailing widget size
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(
-            FontAwesomeIcons.check,
-            size: 35.0, // Adjust the size as needed
-            color: Color.fromARGB(255, 28, 253, 39),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Date:$formattedDate",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: const Color.fromARGB(255, 41, 41, 41),
+                  fontFamily: 'Gilroy',
+                ),
+              ),
+              SizedBox(height: 5),
+              Text(
+                "Time:$formattedTime",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: const Color.fromARGB(255, 41, 41, 41),
+                  fontFamily: 'Gilroy',
+                ),
+              ),
+            ],
+          ),
+          Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(255, 38, 226, 166).withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 10,
+                  offset: Offset(0, 2),
+                ),
+              ],
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromARGB(255, 29, 213, 140),
+                  Color.fromARGB(255, 42, 254, 169),
+                  Color.fromARGB(255, 29, 213, 140),
+                ],
+              ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  FontAwesomeIcons.leaf,
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  size: 20,
+                ),
+                SizedBox(height: 5),
+                Text(
+                  "$redeemedAmount",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Gilroy',
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

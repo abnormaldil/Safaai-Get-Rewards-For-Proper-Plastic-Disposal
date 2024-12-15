@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:safaai/home.dart';
-import 'package:safaai/profile.dart';
 import 'package:safaai/redeem.dart';
 import 'package:safaai/transaction.dart';
 
@@ -12,23 +11,23 @@ class BottomNav extends StatefulWidget {
 }
 
 class _BottomNavState extends State<BottomNav> {
-  int currentTabIndex = 0;
+  int currentTabIndex = 1;
 
   late List<Widget> pages;
   late Widget currentPage;
   late HomePage homePage;
   late RedeemPage redeemPage;
   late TransactionPage transactionHistoryScreen;
-  late ProfilePage profilePage;
 
   @override
   void initState() {
+    super.initState();
     homePage = HomePage();
     redeemPage = RedeemPage();
     transactionHistoryScreen = TransactionPage();
-    profilePage = ProfilePage();
-    pages = [homePage, redeemPage, transactionHistoryScreen, profilePage];
-    super.initState();
+
+    pages = [homePage, redeemPage, transactionHistoryScreen];
+    currentTabIndex = 1;
   }
 
   @override
@@ -46,8 +45,9 @@ class _BottomNavState extends State<BottomNav> {
           child: CurvedNavigationBar(
             height: 75,
             backgroundColor: Colors.transparent, // Transparent navbar
-            color: Color(0xFF18cc84), // Navbar's primary color
+            color: Color.fromARGB(255, 42, 254, 169), // Navbar's primary color
             animationDuration: Duration(milliseconds: 500),
+            index: currentTabIndex,
             onTap: (int index) {
               setState(() {
                 currentTabIndex = index;
@@ -55,20 +55,22 @@ class _BottomNavState extends State<BottomNav> {
             },
             items: [
               Icon(
-                Icons.home_outlined,
-                color: const Color.fromARGB(255, 23, 23, 23),
+                Icons.my_location,
+                color: currentTabIndex == 0
+                    ? Colors.white // Active color
+                    : const Color.fromARGB(255, 23, 23, 23),
               ),
               Icon(
-                Icons.wallet_outlined,
-                color: const Color.fromARGB(255, 23, 23, 23),
+                Icons.recycling,
+                color: currentTabIndex == 1
+                    ? Colors.white // Active color
+                    : const Color.fromARGB(255, 23, 23, 23),
               ),
               Icon(
                 Icons.history_outlined,
-                color: const Color.fromARGB(255, 23, 23, 23),
-              ),
-              Icon(
-                Icons.person_outline,
-                color: const Color.fromARGB(255, 23, 23, 23),
+                color: currentTabIndex == 2
+                    ? Colors.white // Active color
+                    : const Color.fromARGB(255, 23, 23, 23),
               ),
             ],
           ),

@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              backgroundColor: Color(0xFF18cc84),
+              backgroundColor: Color.fromARGB(255, 42, 254, 169),
               title: Text('We Dont Know You!'),
               content:
                   Text('Please introduce yourself by registering in our app.'),
@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              backgroundColor: Color(0xFF18cc84),
+              backgroundColor: Color.fromARGB(255, 42, 254, 169),
               title: Text('Invalid Email'),
               content: Text('The entered Email is invalid. Please try again.'),
               actions: [
@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              backgroundColor: Color(0xFF18cc84),
+              backgroundColor: Color.fromARGB(255, 42, 254, 169),
               title: Text('Invalid Password'),
               content:
                   Text('The entered Password is invalid. Please try again.'),
@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              backgroundColor: Color(0xFF18cc84),
+              backgroundColor: Color.fromARGB(255, 42, 254, 169),
               title: Text('Who are you?'),
               content: Text("We don't know you. SignUp instead."),
               actions: [
@@ -207,7 +207,8 @@ class _LoginPageState extends State<LoginPage> {
                                     fontSize: 20.0, color: Color(0xFFFFFFFF)),
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: Color(0xFF18cc84), width: 5.0),
+                                      color: Color.fromARGB(255, 42, 254, 169),
+                                      width: 5.0),
                                   borderRadius: BorderRadius.circular(50),
                                 )),
                           ),
@@ -229,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
                                 padding: EdgeInsets.symmetric(
                                     vertical: 13.0, horizontal: 13.0),
                                 decoration: BoxDecoration(
-                                    color: Color(0xFF18cc84),
+                                    color: Color.fromARGB(255, 42, 254, 169),
                                     borderRadius: BorderRadius.circular(30)),
                                 child: Center(
                                     child: Text(

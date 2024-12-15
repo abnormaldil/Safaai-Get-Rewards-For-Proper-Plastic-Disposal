@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:safaai/bottomnav.dart';
 import 'package:safaai/forgotpass.dart';
 import 'package:safaai/home.dart';
 import 'package:safaai/login.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => ProfilePage(),
         '/redeem': (context) => RedeemPage(),
         '/mainpage': (context) => MainPage(),
+        '/bottomnav': (context) => BottomNav(),
       },
     );
   }
